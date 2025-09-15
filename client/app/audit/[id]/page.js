@@ -1,0 +1,117 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
+import toast from "react-hot-toast";
+
+import { downloadAuditPdf } from "../../../lib/download";
+
+// Import modular components
+import AuditHeader from "../../../components/audit/AuditHeader";
+import ScoreOverview from "../../../components/audit/ScoreOverview";
+import PerformanceMetrics from "../../../components/audit/PerformanceMetrics";
+import MetaTags from "../../../components/audit/MetaTags";
+import ContentAnalysis from "../../../components/audit/ContentAnalysis";
+import ImagesAnalysis from "../../../components/audit/ImagesAnalysis";
+import LinksAnalysis from "../../../components/audit/LinksAnalysis";
+import CompetitorAnalysis from "../../../components/audit/CompetitorAnalysis";
+import IssuesRecommendations from "../../../components/audit/IssuesRecommendations";
+import api from "@/lib/api";
+
+export default function AuditDetailPage() {
+  const [audit, setAudit] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [competitors, setCompetitors] = useState([]);
+  const router = useRouter();
+  const params = useParams();
+  const auditId = params?.id;
+
+  useEffect(() => {
+    if (auditId) {
+      fetchAuditDetails();
+      fetchCompetitors();
+    }
+  }, [auditId]);
+
+  const fetchAuditDetails = async () => {
+    try {
+      setLoading(true);
+      console.log("Fetching audit details for ID:", auditId);
+      const response = await api.get(`/reports/summary/${auditId}`);
+      console.log("Audit details response:", response.data);
+      setAudit(response.data);
+    } catch (error) {
+      console.error("Failed to fetch audit details:", error);
+      toast.error("Failed to load audit details");
+      router.push("/dashboard");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCompetitors = async () => {
+    try {
+      const response = await api.get(`/audit/${auditId}/competitors`);
+      setCompetitors(response.data.competitors || []);
+    } catch (error) {
+      console.error("Failed to fetch competitors:", error);
+    }
+  };
+
+  const handleDownloadPdf = async () => {
+    try {
+      await downloadAuditPdf(auditId, audit.audit.websiteUrl);
+    } catch (error) {
+      console.error("PDF download failed:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
+        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
+      </div>
+    );
+  }
+
+  if (!audit) {
+    return (
+      <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
+        <div className='text-center'>
+          <h2 className='text-2xl font-bold text-gray-900 mb-4'>Audit Not Found</h2>
+          <Link href='/dashboard' className='text-blue-600 hover:text-blue-800'>
+            ← Back to Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const { audit: auditData, keywords, meta } = audit;
+
+  return (
+    <div className='min-h-screen bg-black'>
+      <AuditHeader audit={auditData} onDownloadPdf={handleDownloadPdf} />
+
+      <div className='max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8'>
+        <ScoreOverview auditData={auditData} />
+
+        <PerformanceMetrics performanceData={auditData.performance} />
+
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8'>
+          <MetaTags meta={meta} auditData={auditData} />
+          <ContentAnalysis contentData={auditData.content} />
+        </div>
+
+        <ImagesAnalysis imagesData={auditData.images} />
+
+        <LinksAnalysis linksData={auditData.links} />
+
+        <CompetitorAnalysis auditId={auditId} competitors={competitors} setCompetitors={setCompetitors} />
+
+        <IssuesRecommendations auditData={auditData} />
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,10 @@
+// Export all audit-related components for easy imports
+export { default as AuditHeader } from "./AuditHeader";
+export { default as ScoreOverview } from "./ScoreOverview";
+export { default as PerformanceMetrics } from "./PerformanceMetrics";
+export { default as MetaTags } from "./MetaTags";
+export { default as ContentAnalysis } from "./ContentAnalysis";
+export { default as ImagesAnalysis } from "./ImagesAnalysis";
+export { default as LinksAnalysis } from "./LinksAnalysis";
+export { default as CompetitorAnalysis } from "./CompetitorAnalysis";
+export { default as IssuesRecommendations } from "./IssuesRecommendations";
