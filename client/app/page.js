@@ -13,7 +13,6 @@ import ShinyText from "../components/ShinyText";
 import CircularGallery from "../components/CircularGallery";
 import RippleGrid from "../components/RippleGrid";
 import Threads from "@/components/Threads";
-import Galaxy from "@/components/Galaxy";
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
