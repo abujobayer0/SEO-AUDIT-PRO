@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, BarChart3 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -16,6 +16,7 @@ import Threads from "@/components/Threads";
 import LogoLoop from "@/components/LogoLoop";
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 import Link from "next/link";
+import LogRocket from "logrocket";
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
@@ -47,7 +48,9 @@ export default function HomePage() {
       setIsLoading(false);
     }
   };
-
+  useEffect(() => {
+    LogRocket.init("uibfxx/seo-inspect-pro");
+  }, []);
   return (
     <div className='min-h-screen w-full bg-black flex flex-col items-center'>
       {/* Header */}
