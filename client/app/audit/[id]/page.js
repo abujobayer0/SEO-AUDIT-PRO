@@ -17,19 +17,26 @@ import ImagesAnalysis from "../../../components/audit/ImagesAnalysis";
 import LinksAnalysis from "../../../components/audit/LinksAnalysis";
 import CompetitorAnalysis from "../../../components/audit/CompetitorAnalysis";
 import IssuesRecommendations from "../../../components/audit/IssuesRecommendations";
-import api from "@/lib/api";
+import api, { reportsApi } from "@/lib/api";
 import DarkVeil from "@/components/DarkVeil";
 
 export default function AuditDetailPage() {
   const [audit, setAudit] = useState(null);
   const [loading, setLoading] = useState(true);
   const [competitors, setCompetitors] = useState([]);
+  const [isSharedView, setIsSharedView] = useState(false);
   const router = useRouter();
   const params = useParams();
   const auditId = params?.id;
 
   useEffect(() => {
-    if (auditId) {
+    if (!auditId) return;
+    const search = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    const shareId = search?.get("share");
+    if (shareId) {
+      setIsSharedView(true);
+      fetchSharedDetails(shareId);
+    } else {
       fetchAuditDetails();
       fetchCompetitors();
     }
@@ -46,6 +53,19 @@ export default function AuditDetailPage() {
       console.error("Failed to fetch audit details:", error);
       toast.error("Failed to load audit details");
       router.push("/dashboard");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSharedDetails = async (shareId) => {
+    try {
+      setLoading(true);
+      const data = await reportsApi.getSharedSummary(shareId);
+      setAudit(data);
+    } catch (error) {
+      toast.error("This shared report is unavailable.");
+      router.replace("/login");
     } finally {
       setLoading(false);
     }
@@ -103,10 +123,10 @@ export default function AuditDetailPage() {
       <div className='max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 relative z-10'>
         <ScoreOverview auditData={auditData} />
 
-        <PerformanceMetrics performanceData={auditData.performance} websiteUrl={auditData.websiteUrl} />
+        <PerformanceMetrics performanceData={auditData.performance} websiteUrl={auditData.websiteUrl} hideAiActions={isSharedView} />
 
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8'>
-          <MetaTags meta={meta} auditData={auditData} keywords={keywords} />
+          <MetaTags meta={meta} auditData={auditData} keywords={keywords} hideAiActions={isSharedView} />
           <ContentAnalysis contentData={auditData.content} />
         </div>
 
@@ -114,9 +134,9 @@ export default function AuditDetailPage() {
 
         <LinksAnalysis linksData={auditData.links} />
 
-        <CompetitorAnalysis auditId={auditId} competitors={competitors} setCompetitors={setCompetitors} />
+        {!isSharedView && <CompetitorAnalysis auditId={auditId} competitors={competitors} setCompetitors={setCompetitors} />}
 
-        <IssuesRecommendations auditData={auditData} />
+        <IssuesRecommendations auditData={auditData} hideAiActions={isSharedView} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useState } from "react";
 import SpotlightCard from "../SpotlightCard";
 import api from "@/lib/api";
 
-const PerformanceMetrics = ({ performanceData, websiteUrl }) => {
+const PerformanceMetrics = ({ performanceData, websiteUrl, hideAiActions = false }) => {
   if (!performanceData) return null;
 
   const [aiLoading, setAiLoading] = useState(false);
@@ -130,33 +130,37 @@ const PerformanceMetrics = ({ performanceData, websiteUrl }) => {
         </div>
       )}
 
-      <div className='mt-6'>
-        <button
-          onClick={handleExplain}
-          disabled={aiLoading}
-          className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-black font-semibold shadow'
-        >
-          <Sparkles className='w-4 h-4' />
-          {aiLoading ? "Analyzing..." : "AI Explain & Fixes"}
-        </button>
-        {aiError ? <p className='text-red-400 text-sm mt-2'>{aiError}</p> : null}
+      {!hideAiActions && (
+        <div className='mt-6'>
+          <button
+            onClick={handleExplain}
+            disabled={aiLoading}
+            className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-black font-semibold shadow'
+          >
+            <Sparkles className='w-4 h-4' />
+            {aiLoading ? "Analyzing..." : "AI Explain & Fixes"}
+          </button>
+          {aiError ? <p className='text-red-400 text-sm mt-2'>{aiError}</p> : null}
 
-        {aiResult && (
-          <div className='mt-4 space-y-3'>
-            {aiResult.summary && <div className='bg-black/40 border border-white/10 p-4 rounded-lg text-gray-200'>{aiResult.summary}</div>}
-            {Array.isArray(aiResult.actions) && aiResult.actions.length > 0 && (
-              <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
-                <div className='text-white font-semibold mb-2'>Priority Actions</div>
-                <ul className='list-disc ml-5 text-gray-200 space-y-1'>
-                  {aiResult.actions.map((a, i) => (
-                    <li key={i}>{a}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+          {aiResult && (
+            <div className='mt-4 space-y-3'>
+              {aiResult.summary && (
+                <div className='bg-black/40 border border-white/10 p-4 rounded-lg text-gray-200'>{aiResult.summary}</div>
+              )}
+              {Array.isArray(aiResult.actions) && aiResult.actions.length > 0 && (
+                <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
+                  <div className='text-white font-semibold mb-2'>Priority Actions</div>
+                  <ul className='list-disc ml-5 text-gray-200 space-y-1'>
+                    {aiResult.actions.map((a, i) => (
+                      <li key={i}>{a}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </SpotlightCard>
   );
 };

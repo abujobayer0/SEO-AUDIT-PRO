@@ -299,6 +299,17 @@ const auditSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  // Public sharing
+  shareId: {
+    type: String,
+    default: null,
+    index: true,
+  },
+  shareEnabled: {
+    type: Boolean,
+    default: false,
+    index: true,
+  },
 });
 
 // Index for efficient queries

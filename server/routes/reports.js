@@ -46,7 +46,7 @@ router.get("/pdf/:auditId", auth, async (req, res) => {
   }
 });
 
-// Get report summary for dashboard
+// Get report summary (private)
 router.get("/summary/:auditId", auth, async (req, res) => {
   try {
     const audit = await Audit.findOne({
@@ -135,6 +135,74 @@ router.get("/summary/:auditId", auth, async (req, res) => {
   } catch (error) {
     console.error("Get report summary error:", error);
     res.status(500).json({ message: "Failed to fetch report summary" });
+  }
+});
+
+// Enable or disable sharing (private)
+router.post("/summary/:auditId/share", auth, async (req, res) => {
+  try {
+    const { enable } = req.body;
+    const audit = await Audit.findOne({ _id: req.params.auditId, userId: req.user._id });
+    if (!audit) return res.status(404).json({ message: "Audit not found" });
+
+    if (enable) {
+      audit.shareEnabled = true;
+      if (!audit.shareId) {
+        audit.shareId = require("crypto").randomBytes(12).toString("hex");
+      }
+    } else {
+      audit.shareEnabled = false;
+    }
+    await audit.save();
+    res.json({ shareEnabled: audit.shareEnabled, shareId: audit.shareId });
+  } catch (error) {
+    console.error("Toggle share error:", error);
+    res.status(500).json({ message: "Failed to update share settings" });
+  }
+});
+
+// Public shared summary (no auth)
+router.get("/shared/:shareId", async (req, res) => {
+  try {
+    const audit = await Audit.findOne({ shareId: req.params.shareId, shareEnabled: true });
+    if (!audit) return res.status(404).json({ message: "Shared report not found" });
+
+    // Return same shape as private summary but without any user-identifying fields
+    res.json({
+      audit: {
+        id: audit._id,
+        websiteUrl: audit.websiteUrl,
+        overallScore: audit.overallScore,
+        createdAt: audit.createdAt,
+        performance: audit.performance || { score: 0, issues: [], suggestions: [] },
+        seo: audit.seo || { score: 0, issues: [], suggestions: [] },
+        mobileFriendly: audit.mobileFriendly || { score: 0, issues: [], suggestions: [] },
+        technical: audit.technical || { score: 0, issues: [], suggestions: [] },
+        content: audit.content || { score: 0, issues: [], suggestions: [], topKeywords: [] },
+        accessibility: audit.accessibility || { score: 0, issues: [], suggestions: [] },
+        metaTags: audit.metaTags || {},
+        images: audit.images || { total: 0, withoutAlt: 0, oversized: 0, issues: [] },
+        links: audit.links || { total: 0, external: 0, broken: 0, issues: [] },
+        pageSpeed: audit.pageSpeed || {},
+        lighthouse: audit.lighthouse || {},
+      },
+      meta: {
+        title: audit.metaTags?.title || "",
+        description: audit.metaTags?.description || "",
+        titleLength: audit.metaTags?.titleLength || 0,
+        descriptionLength: audit.metaTags?.descriptionLength || 0,
+        length: audit.metaTags?.titleLength || 0,
+      },
+      keywords: Array.isArray(audit.content?.topKeywords)
+        ? audit.content.topKeywords.map((k) => (typeof k === "string" ? k : k?.keyword || "")).filter(Boolean)
+        : [],
+      priorityIssues: [],
+      suggestions: [],
+      nextSteps: [],
+    });
+  } catch (error) {
+    console.error("Get shared summary error:", error);
+    res.status(500).json({ message: "Failed to fetch shared report" });
   }
 });
 

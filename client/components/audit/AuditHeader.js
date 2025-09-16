@@ -1,13 +1,36 @@
 import Link from "next/link";
-import { ArrowLeft, Download, Globe, Clock, BarChart3 } from "lucide-react";
+import { ArrowLeft, Download, Globe, Clock, BarChart3, Share2, CheckCheck } from "lucide-react";
 import StarBorder from "../StarBorder";
 import SpotlightCard from "../SpotlightCard";
+import { useState } from "react";
+import { reportsApi } from "@/lib/api";
 
 const AuditHeader = ({ audit, onDownloadPdf }) => {
+  const [shareBusy, setShareBusy] = useState(false);
+  const [shareLink, setShareLink] = useState(null);
+
   const getScoreBadgeColor = (score) => {
     if (score >= 80) return "from-green-400 to-green-600";
     if (score >= 60) return "from-yellow-400 to-yellow-600";
     return "from-red-400 to-red-600";
+  };
+
+  const handleShare = async () => {
+    if (shareBusy) return;
+    try {
+      setShareBusy(true);
+      const data = await reportsApi.toggleShare(audit.id, true);
+      const base = typeof window !== "undefined" ? window.location.origin : "";
+      const url = `${base}/share/${data.shareId}`;
+      setShareLink(url);
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch (_) {}
+    } catch (e) {
+      // ignore; optional toast in parent
+    } finally {
+      setShareBusy(false);
+    }
   };
 
   return (
@@ -29,6 +52,10 @@ const AuditHeader = ({ audit, onDownloadPdf }) => {
                 <Download className='w-4 h-4 mr-2' />
                 Download PDF
               </StarBorder>{" "}
+              <StarBorder as='button' onClick={handleShare} color='rgba(255, 255, 255, 0.6)' thickness={1} className='px-6 py-3'>
+                {shareLink ? <CheckCheck className='w-4 h-4 mr-2' /> : <Share2 className='w-4 h-4 mr-2' />}
+                {shareLink ? "Link copied" : shareBusy ? "Sharing…" : "Share"}
+              </StarBorder>
               <StarBorder
                 as={Link}
                 href='/dashboard'

@@ -2,7 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import ClickSpark from "../components/ClickSpark";
-
+import { Analytics } from "@vercel/analytics/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -26,9 +26,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "SEO Audit Tool - White Label Solution",
     description: "Professional SEO audit tool for agencies with white-label reporting",
-    images: [
-      "https://og-playground.vercel.app/api/card?title=SEO%20Audit%20Pro&subtitle=White‑Label%20SEO%20Reports",
-    ],
+    images: ["https://og-playground.vercel.app/api/card?title=SEO%20Audit%20Pro&subtitle=White‑Label%20SEO%20Reports"],
   },
 };
 
@@ -46,6 +44,7 @@ export default function RootLayout({ children }) {
           extraScale={1.2}
         >
           {children}
+          <Analytics />
           <Toaster
             position='top-right'
             toastOptions={{

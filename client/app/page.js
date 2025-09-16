@@ -328,6 +328,10 @@ export default function HomePage() {
                   </li>
                   <li className='flex items-center'>
                     <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
+                    AI recommendations & executive summaries
+                  </li>
+                  <li className='flex items-center'>
+                    <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
                     Branded PDF reports
                   </li>
                   <li className='flex items-center'>
@@ -360,6 +364,10 @@ export default function HomePage() {
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
                   <ShinyText text='All Pro features' speed={6} />
+                </li>
+                <li className='flex items-center'>
+                  <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
+                  AI competitor briefs & content outlines
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>

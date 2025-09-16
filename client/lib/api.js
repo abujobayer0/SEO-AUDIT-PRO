@@ -28,6 +28,22 @@ api.interceptors.response.use(
 
 export default api;
 
+export const reportsApi = {
+  getPrivateSummary: async (auditId) => {
+    const res = await api.get(`/reports/summary/${auditId}`);
+    return res.data;
+  },
+  toggleShare: async (auditId, enable) => {
+    const res = await api.post(`/reports/summary/${auditId}/share`, { enable });
+    return res.data;
+  },
+  getSharedSummary: async (shareId) => {
+    // no auth header automatically gets attached server-side, but client interceptor uses localStorage token conditionally
+    const res = await api.get(`/reports/shared/${shareId}`);
+    return res.data;
+  },
+};
+
 export const communityApi = {
   listPosts: async (params = {}) => {
     const res = await api.get("/community/posts", { params });

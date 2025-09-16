@@ -3,7 +3,7 @@ import { useState } from "react";
 import SpotlightCard from "../SpotlightCard";
 import api from "@/lib/api";
 
-const IssuesRecommendations = ({ auditData }) => {
+const IssuesRecommendations = ({ auditData, hideAiActions = false }) => {
   const issuesCategories = [
     { category: "Performance", issues: auditData.performance?.issues || [] },
     { category: "SEO", issues: auditData.seo?.issues || [] },
@@ -94,53 +94,55 @@ const IssuesRecommendations = ({ auditData }) => {
               )
           )}
         </div>
-        <div className='pt-3'>
-          <button
-            onClick={handleSeoAnalyze}
-            disabled={loading}
-            className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 disabled:opacity-60 text-black font-semibold shadow'
-          >
-            <Sparkles className='w-4 h-4' />
-            {loading ? "Analyzing..." : "AI SEO Deep Analysis"}
-          </button>
-          {error ? <p className='text-red-400 text-sm mt-2'>{error}</p> : null}
+        {!hideAiActions && (
+          <div className='pt-3'>
+            <button
+              onClick={handleSeoAnalyze}
+              disabled={loading}
+              className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 disabled:opacity-60 text-black font-semibold shadow'
+            >
+              <Sparkles className='w-4 h-4' />
+              {loading ? "Analyzing..." : "AI SEO Deep Analysis"}
+            </button>
+            {error ? <p className='text-red-400 text-sm mt-2'>{error}</p> : null}
 
-          {ai && (
-            <div className='mt-4 space-y-3'>
-              {ai.summary && <div className='bg-black/40 border border-white/10 p-4 rounded-lg text-gray-200'>{ai.summary}</div>}
-              {Array.isArray(ai.quickWins) && ai.quickWins.length > 0 && (
-                <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
-                  <div className='text-white font-semibold mb-2'>Quick Wins</div>
-                  <ul className='list-disc ml-5 text-gray-200 space-y-1'>
-                    {ai.quickWins.map((a, i) => (
-                      <li key={i}>{a}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {Array.isArray(ai.deepIssues) && ai.deepIssues.length > 0 && (
-                <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
-                  <div className='text-white font-semibold mb-2'>Deep Issues</div>
-                  <ul className='list-disc ml-5 text-gray-200 space-y-1'>
-                    {ai.deepIssues.map((a, i) => (
-                      <li key={i}>{a}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {Array.isArray(ai.recommendations) && ai.recommendations.length > 0 && (
-                <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
-                  <div className='text-white font-semibold mb-2'>Recommendations</div>
-                  <ul className='list-disc ml-5 text-gray-200 space-y-1'>
-                    {ai.recommendations.map((a, i) => (
-                      <li key={i}>{a}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+            {ai && (
+              <div className='mt-4 space-y-3'>
+                {ai.summary && <div className='bg-black/40 border border-white/10 p-4 rounded-lg text-gray-200'>{ai.summary}</div>}
+                {Array.isArray(ai.quickWins) && ai.quickWins.length > 0 && (
+                  <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
+                    <div className='text-white font-semibold mb-2'>Quick Wins</div>
+                    <ul className='list-disc ml-5 text-gray-200 space-y-1'>
+                      {ai.quickWins.map((a, i) => (
+                        <li key={i}>{a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {Array.isArray(ai.deepIssues) && ai.deepIssues.length > 0 && (
+                  <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
+                    <div className='text-white font-semibold mb-2'>Deep Issues</div>
+                    <ul className='list-disc ml-5 text-gray-200 space-y-1'>
+                      {ai.deepIssues.map((a, i) => (
+                        <li key={i}>{a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {Array.isArray(ai.recommendations) && ai.recommendations.length > 0 && (
+                  <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
+                    <div className='text-white font-semibold mb-2'>Recommendations</div>
+                    <ul className='list-disc ml-5 text-gray-200 space-y-1'>
+                      {ai.recommendations.map((a, i) => (
+                        <li key={i}>{a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </SpotlightCard>
     </div>
   );

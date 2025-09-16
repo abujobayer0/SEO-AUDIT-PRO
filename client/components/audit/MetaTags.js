@@ -3,7 +3,7 @@ import { useState } from "react";
 import SpotlightCard from "../SpotlightCard";
 import api from "@/lib/api";
 
-const MetaTags = ({ meta, auditData, keywords = [] }) => {
+const MetaTags = ({ meta, auditData, keywords = [], hideAiActions = false }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [variants, setVariants] = useState([]);
@@ -64,20 +64,22 @@ const MetaTags = ({ meta, auditData, keywords = [] }) => {
           <p className='text-sm text-gray-400 mt-1'>Length: {descriptionLength} characters</p>
         </div>
 
-        <div className='pt-2'>
-          <button
-            onClick={handleGenerate}
-            disabled={loading}
-            className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 disabled:opacity-60 text-black font-semibold shadow'
-          >
-            <Sparkles className='w-4 h-4' />
-            {loading ? "Generating..." : "Generate Suggestions"}
-          </button>
-        </div>
+        {!hideAiActions && (
+          <div className='pt-2'>
+            <button
+              onClick={handleGenerate}
+              disabled={loading}
+              className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 disabled:opacity-60 text-black font-semibold shadow'
+            >
+              <Sparkles className='w-4 h-4' />
+              {loading ? "Generating..." : "Generate Suggestions"}
+            </button>
+          </div>
+        )}
 
-        {error ? <p className='text-red-400 text-sm'>{error}</p> : null}
+        {!hideAiActions && (error ? <p className='text-red-400 text-sm'>{error}</p> : null)}
 
-        {variants?.length ? (
+        {!hideAiActions && variants?.length ? (
           <div className='mt-4 grid gap-3'>
             {variants.map((v, idx) => (
               <div key={idx} className='rounded-xl border border-white/10 p-4 bg-black/40'>
