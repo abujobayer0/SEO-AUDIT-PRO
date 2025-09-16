@@ -242,8 +242,8 @@ export default function DashboardPage() {
         >
           {/* LaserFlow Background - Full Width */}
           <LaserFlow
-            horizontalBeamOffset={0.05}
-            verticalBeamOffset={-0.2}
+            horizontalBeamOffset={0.17}
+            verticalBeamOffset={-0.18}
             color='#0077ff'
             flowSpeed={0.4}
             wispIntensity={4.0}

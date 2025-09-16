@@ -25,6 +25,7 @@ export default function Settings() {
     reportsGenerated: 0,
     lastActivity: null,
   });
+  const [usage, setUsage] = useState({ currentMonth: 0, maxMonthly: 0, remaining: 0, subscription: "", subscriptionExpires: null });
 
   const router = useRouter();
 
@@ -32,6 +33,7 @@ export default function Settings() {
     checkAuth();
     fetchUserData();
     fetchUserStats();
+    fetchUsage();
   }, []);
 
   const checkAuth = () => {
@@ -70,6 +72,15 @@ export default function Settings() {
       setStats(response.data);
     } catch (error) {
       console.error("Failed to fetch user stats:", error);
+    }
+  };
+
+  const fetchUsage = async () => {
+    try {
+      const response = await api.get("/users/usage");
+      if (response?.data?.usage) setUsage(response.data.usage);
+    } catch (error) {
+      console.error("Failed to fetch usage:", error);
     }
   };
 
@@ -267,9 +278,7 @@ export default function Settings() {
                       <div className='flex items-center justify-between'>
                         <div>
                           <p className='font-medium text-white capitalize'>{formData.subscription} Plan</p>
-                          <p className='text-sm text-gray-300'>
-                            {formData.subscription === "free" ? "Limited to 10 audits per month" : "Unlimited audits and advanced features"}
-                          </p>
+                          <p className='text-sm text-gray-300'>{`Used ${usage.currentMonth} of ${usage.maxMonthly} scans this month`}</p>
                         </div>
                         {formData.subscription === "free" && (
                           <StarBorder as='button' type='button' color='rgba(255, 255, 255, 0.6)' thickness={1} className='px-4 py-2'>
