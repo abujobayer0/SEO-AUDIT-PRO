@@ -252,7 +252,7 @@ export default function RegisterPage() {
               required
               className='h-4 w-4 text-white focus:ring-white border-white/30 rounded bg-gray-900/30'
             />
-            <label htmlFor='terms' className='ml-2 block text-sm text-gray-100'>
+            <label htmlFor='terms' className='ml-2 block text-sm text-gray-500'>
               I agree to the{" "}
               <a href='#' className='text-white hover:text-white/80'>
                 Terms of Service
@@ -278,7 +278,7 @@ export default function RegisterPage() {
           </div>
 
           <div className='text-center'>
-            <p className='text-sm text-gray-100'>
+            <p className='text-sm text-gray-300'>
               Already have an account?{" "}
               <a href='/login' className='font-medium text-white hover:text-white/80'>
                 <ShinyText text='Sign in' speed={6} />

@@ -159,6 +159,11 @@ export default function LoginPage() {
             </p>
           </div>
         </form>
+        <div className='mt-6 text-center text-sm text-gray-100'>
+          <a href='/privacy-policy' className='hover:text-white/80 underline underline-offset-4'>
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </div>
   );
