@@ -13,6 +13,10 @@ import SpotlightCard from "../components/SpotlightCard";
 import ShinyText from "../components/ShinyText";
 import CircularGallery from "../components/CircularGallery";
 import RippleGrid from "../components/RippleGrid";
+import Threads from "@/components/Threads";
+import Hyperspeed from "@/components/Hyperspeed";
+import FaultyTerminal from "@/components/FaultyTerminal";
+import Galaxy from "@/components/Galaxy";
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
@@ -68,7 +72,9 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className='py-20 w-full mx-auto pt-0 relative h-screen'>
         <div className='absolute inset-0 w-full h-full'>
-          <LiquidEther colors={["#0c8aed", "#0077ff", "#002952"]} />
+          {/* <LiquidEther colors={["#0c8aed", "#0077ff", "#002952"]} />
+           */}
+          <Threads amplitude={1} distance={0} enableMouseInteraction={true} />
         </div>
         <div className='absolute inset-0 flex items-center justify-center'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10'>
@@ -355,8 +361,11 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className='bg-gray-900/40 backdrop-blur-sm w-full text-white py-16 border-t border-white/10 mt-16'>
-        <div className='max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8'>
+      <footer className='relative w-full text-white backdrop-blur-md border-t flex flex-col items-center border-white/10 mt-16 overflow-hidden'>
+        <div className='absolute inset-0 z-0 pointer-events-none'>
+          <Galaxy saturation={1} mouseInteraction mouseRepulsion />
+        </div>
+        <div className='relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16'>
           <div className='text-center'>
             <div className='flex items-center justify-center mb-4'>
               <BarChart3 className='h-8 w-8 text-white' />

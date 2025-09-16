@@ -62,8 +62,8 @@ const ScoreOverview = ({ auditData }) => {
       {scoreCards.map(({ icon: Icon, title, score, color, bgColor, ringColor }) => (
         <SpotlightCard
           key={title}
-          className='text-center bg-black/80 backdrop-blur-xl border-white/5 shadow-2xl'
-          spotlightColor='rgba(255, 255, 255, 0.05)'
+          className='text-center bg-black/40 backdrop-blur-2xl border-white/10 shadow-2xl ring-1 ring-white/5'
+          spotlightColor='rgba(255, 255, 255, 0.1)'
         >
           <div className={`${bgColor} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ring-2 ${ringColor}`}>
             <Icon className={`w-8 h-8 ${color}`} />

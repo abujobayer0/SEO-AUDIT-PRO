@@ -18,7 +18,7 @@ import LinksAnalysis from "../../../components/audit/LinksAnalysis";
 import CompetitorAnalysis from "../../../components/audit/CompetitorAnalysis";
 import IssuesRecommendations from "../../../components/audit/IssuesRecommendations";
 import api from "@/lib/api";
-import PixelBlast from "@/components/PixelBlast";
+import DarkVeil from "@/components/DarkVeil";
 
 export default function AuditDetailPage() {
   const [audit, setAudit] = useState(null);
@@ -94,25 +94,9 @@ export default function AuditDetailPage() {
   return (
     <div className='min-h-screen bg-black'>
       <div className='w-full h-full absolute inset-0'>
-        <PixelBlast
-          variant='circle'
-          pixelSize={6}
-          color='#B19EEF'
-          patternScale={3}
-          patternDensity={1.2}
-          pixelSizeJitter={0.5}
-          enableRipples
-          rippleSpeed={0.4}
-          rippleThickness={0.12}
-          rippleIntensityScale={1.5}
-          liquid
-          liquidStrength={0.12}
-          liquidRadius={1.2}
-          liquidWobbleSpeed={5}
-          speed={0.6}
-          edgeFade={0.25}
-          transparent
-        />
+        <div style={{ width: "100%", height: "600px", position: "relative" }}>
+          <DarkVeil hueShift={22} />
+        </div>
       </div>
       <AuditHeader audit={auditData} onDownloadPdf={handleDownloadPdf} />
 

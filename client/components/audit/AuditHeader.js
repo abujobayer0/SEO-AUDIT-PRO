@@ -13,7 +13,7 @@ const AuditHeader = ({ audit, onDownloadPdf }) => {
   return (
     <>
       {/* Header */}
-      <header className='bg-black/30 backdrop-blur-md w-[90%] rounded-full absolute shadow-xl border border-white/10 top-4 left-1/2 transform -translate-x-1/2 z-50'>
+      <header className='bg-black/40 backdrop-blur-2xl w-[90%] rounded-full absolute shadow-2xl border border-white/10 top-4 left-1/2 transform -translate-x-1/2 z-50'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between items-center py-6'>
             <div className='flex items-center space-x-6'>
@@ -45,10 +45,10 @@ const AuditHeader = ({ audit, onDownloadPdf }) => {
       {/* Website Header */}
       <div className='pt-24 max-w-7xl mx-auto  relative '>
         <SpotlightCard
-          className='bg-black/95 backdrop-blur-lg border-white/10 mx-4 sm:mx-6 lg:mx-8 mt-16'
+          className='bg-black/40 backdrop-blur-2xl border-white/10 mx-4 sm:mx-6 lg:mx-8 mt-16 shadow-2xl'
           spotlightColor='rgba(59, 130, 246, 0.3)'
         >
-          <div className='flex items-center justify-between p-4'>
+          <div className='flex items-center justify-between p-4 relative z-10'>
             <div className='flex items-center space-x-6'>
               <div className='flex-shrink-0'>
                 <div className='w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center ring-2 ring-blue-400/30'>
