@@ -13,14 +13,25 @@ export default function CommunityPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
+  const [searching, setSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState(null); // {results, similar}
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(0);
   const [newPost, setNewPost] = useState({ title: "", content: "", authorName: "", tags: "" });
   const [submitting, setSubmitting] = useState(false);
 
-  const loadPosts = async () => {
+  const loadPosts = async (opts = {}) => {
     try {
       setLoading(true);
-      const { posts } = await communityApi.listPosts({ limit: 20 });
+      const p = opts.page ?? page;
+      const l = opts.limit ?? limit;
+      const { posts, total, page: currentPage, limit: currentLimit } = await communityApi.listPosts({ page: p, limit: l });
       setPosts(posts || []);
+      setTotal(total || 0);
+      setPage(currentPage || 1);
+      setLimit(currentLimit || l);
       setError("");
     } catch (e) {
       setError(e.message || "Failed to load posts");
@@ -32,6 +43,26 @@ export default function CommunityPage() {
   useEffect(() => {
     loadPosts();
   }, []);
+
+  const runSearch = async (q, opts = {}) => {
+    const term = (q ?? query).trim();
+    if (!term) {
+      setSearchResults(null);
+      return;
+    }
+    try {
+      setSearching(true);
+      const p = opts.page ?? 1;
+      const l = opts.limit ?? limit;
+      const data = await communityApi.searchPosts({ q: term, page: p, limit: l });
+      setSearchResults(data);
+      setError("");
+    } catch (e) {
+      setError(e.message || "Search failed");
+    } finally {
+      setSearching(false);
+    }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -147,68 +178,133 @@ export default function CommunityPage() {
               </span>
             </div>
           </div>
+
+          {/* Search Bar */}
+          <div className='mt-8 grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto]'>
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") runSearch();
+              }}
+              placeholder='Search by title, content, tags, or author…'
+              className='w-full rounded-lg bg-black/30 border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20'
+            />
+            <button
+              onClick={() => runSearch()}
+              disabled={searching}
+              className='rounded-lg bg-indigo-600/90 hover:bg-indigo-500 transition text-white px-4 py-3 text-sm font-medium border border-white/10 disabled:opacity-60'
+            >
+              {searching ? "Searching…" : "Search"}
+            </button>
+          </div>
         </div>
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         <section id='community-feed' className='md:col-span-2'>
           <div className='flex items-center justify-between mb-4'>
-            <h2 className='text-sm font-medium text-white/80'>Latest discussions</h2>
-            <div className='text-xs text-gray-400'>{loading ? "Loading…" : `${posts.length} post${posts.length === 1 ? "" : "s"}`}</div>
+            <h2 className='text-sm font-medium text-white/80'>{searchResults ? "Search results" : "Latest discussions"}</h2>
+            <div className='text-xs text-gray-400'>
+              {searchResults
+                ? `${searchResults.total || 0} match${(searchResults.total || 0) === 1 ? "" : "es"}`
+                : loading
+                ? "Loading…"
+                : `${total} post${total === 1 ? "" : "s"}`}
+            </div>
           </div>
 
           {loading ? (
             <div className='text-sm text-gray-400'>Loading community posts...</div>
           ) : error ? (
             <div className='text-sm text-red-400'>{error}</div>
+          ) : searchResults ? (
+            <>
+              {/* Results */}
+              {(searchResults.results || []).length === 0 ? (
+                <div className='text-sm text-gray-400'>No results for "{query}".</div>
+              ) : (
+                <ul className='space-y-5'>
+                  {searchResults.results.map((post) => (
+                    <SearchResultItem key={post._id} post={post} />
+                  ))}
+                </ul>
+              )}
+
+              {/* Search Pagination */}
+              <Pagination
+                page={searchResults.page || 1}
+                totalPages={searchResults.totalPages || 1}
+                onPageChange={(p) => runSearch(query, { page: p })}
+              />
+
+              {/* Similar */}
+              {searchResults.similar?.length ? (
+                <div className='mt-8'>
+                  <h3 className='text-sm font-medium text-white/80 mb-3'>Similar discussions</h3>
+                  <ul className='space-y-3'>
+                    {searchResults.similar.map((p) => (
+                      <li key={p._id} className='rounded-xl border border-white/10 bg-black/30 p-4'>
+                        <div className='font-medium'>{p.title}</div>
+                        <div className='text-xs text-gray-400'>{new Date(p.createdAt).toLocaleString()}</div>
+                        <div className='text-sm text-gray-300 mt-2 line-clamp-2'>{p.content}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </>
           ) : posts.length === 0 ? (
             <div className='text-sm text-gray-400'>No posts yet. Be the first to start a discussion!</div>
           ) : (
-            <ul className='space-y-5'>
-              {posts.map((post) => (
-                <li key={post._id} className='relative overflow-hidden rounded-xl border border-white/10 p-[1px]'>
-                  <div className='rounded-xl bg-white/[0.03] p-4 backdrop-blur-xl'>
-                    <div className='flex items-start justify-between gap-3 mb-3'>
-                      <div className='flex items-center gap-3'>
-                        <div className='h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white grid place-items-center text-sm font-semibold'>
-                          {(post.authorName || post.author?.name || "A").slice(0, 1).toUpperCase()}
+            <>
+              <ul className='space-y-5'>
+                {posts.map((post) => (
+                  <li key={post._id} className='relative overflow-hidden rounded-xl border border-white/10 p-[1px]'>
+                    <div className='rounded-xl bg-white/[0.03] p-4 backdrop-blur-xl'>
+                      <div className='flex items-start justify-between gap-3 mb-3'>
+                        <div className='flex items-center gap-3'>
+                          <div className='h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white grid place-items-center text-sm font-semibold'>
+                            {(post.authorName || post.author?.name || "A").slice(0, 1).toUpperCase()}
+                          </div>
+                          <div>
+                            <h3 className='font-semibold leading-tight'>{post.title}</h3>
+                            <div className='text-xs text-gray-500'>{new Date(post.createdAt).toLocaleString()}</div>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className='font-semibold leading-tight'>{post.title}</h3>
-                          <div className='text-xs text-gray-500'>{new Date(post.createdAt).toLocaleString()}</div>
-                        </div>
-                      </div>
-                      <div className='flex items-center gap-2 text-xs text-gray-400'>
-                        <span className='inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-1'>
-                          <svg width='14' height='14' viewBox='0 0 24 24' fill='none' className='opacity-80'>
-                            <path d='M12 4v16m8-8H4' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
-                          </svg>
-                          {post.comments?.length || 0}
-                        </span>
-                      </div>
-                    </div>
-                    <p className='text-sm text-gray-200 whitespace-pre-wrap'>{post.content}</p>
-                    {post.tags?.length ? (
-                      <div className='mt-3 flex flex-wrap gap-2'>
-                        {post.tags.map((t) => (
-                          <span
-                            key={t}
-                            className='text-[10px] uppercase tracking-wide border border-indigo-500/20 bg-indigo-500/10 text-indigo-300 px-2 py-1 rounded-full'
-                          >
-                            {t}
+                        <div className='flex items-center gap-2 text-xs text-gray-400'>
+                          <span className='inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-1'>
+                            <svg width='14' height='14' viewBox='0 0 24 24' fill='none' className='opacity-80'>
+                              <path d='M12 4v16m8-8H4' stroke='currentColor' strokeWidth='2' strokeLinecap='round' />
+                            </svg>
+                            {post.comments?.length || 0}
                           </span>
-                        ))}
+                        </div>
                       </div>
-                    ) : null}
+                      <p className='text-sm text-gray-200 whitespace-pre-wrap'>{post.content}</p>
+                      {post.tags?.length ? (
+                        <div className='mt-3 flex flex-wrap gap-2'>
+                          {post.tags.map((t) => (
+                            <span
+                              key={t}
+                              className='text-[10px] uppercase tracking-wide border border-indigo-500/20 bg-indigo-500/10 text-indigo-300 px-2 py-1 rounded-full'
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
 
-                    <div className='mt-5'>
-                      <h4 className='text-sm font-medium mb-2'>Comments</h4>
-                      <CommentSection post={post} onAddComment={handleAddComment} onAddReply={handleAddReply} />
+                      <div className='mt-5'>
+                        <h4 className='text-sm font-medium mb-2'>Comments</h4>
+                        <CommentSection post={post} onAddComment={handleAddComment} onAddReply={handleAddReply} />
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+              <Pagination page={page} totalPages={Math.max(1, Math.ceil(total / limit))} onPageChange={(p) => loadPosts({ page: p })} />
+            </>
           )}
         </section>
 
@@ -259,6 +355,68 @@ export default function CommunityPage() {
           </div>
         </aside>
       </div>
+    </div>
+  );
+}
+
+function SearchResultItem({ post }) {
+  return (
+    <li className='relative overflow-hidden rounded-xl border border-white/10 p-[1px]'>
+      <div className='rounded-xl bg-white/[0.03] p-4 backdrop-blur-xl'>
+        <div className='flex items-start justify-between gap-3 mb-3'>
+          <div className='flex items-center gap-3'>
+            <div className='h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white grid place-items-center text-sm font-semibold'>
+              {(post.authorName || post.author?.name || "A").slice(0, 1).toUpperCase()}
+            </div>
+            <div>
+              <h3 className='font-semibold leading-tight' dangerouslySetInnerHTML={{ __html: post.highlight?.title || post.title }} />
+              <div className='text-xs text-gray-500'>{new Date(post.createdAt).toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+        <p
+          className='text-sm text-gray-200 whitespace-pre-wrap'
+          dangerouslySetInnerHTML={{ __html: post.highlight?.content || post.content }}
+        />
+        {post.tags?.length ? (
+          <div className='mt-3 flex flex-wrap gap-2'>
+            {(post.highlight?.tags?.length ? post.highlight.tags : post.tags).map((t, i) => (
+              <span
+                key={`${t}-${i}`}
+                className='text-[10px] uppercase tracking-wide border border-indigo-500/20 bg-indigo-500/10 text-indigo-300 px-2 py-1 rounded-full'
+                dangerouslySetInnerHTML={{ __html: t }}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </li>
+  );
+}
+
+function Pagination({ page, totalPages, onPageChange }) {
+  const prev = () => onPageChange(Math.max(1, (page || 1) - 1));
+  const next = () => onPageChange(Math.min(totalPages || 1, (page || 1) + 1));
+  if (!totalPages || totalPages <= 1) return null;
+  return (
+    <div className='mt-6 flex items-center justify-center gap-2'>
+      <button
+        onClick={prev}
+        disabled={(page || 1) <= 1}
+        className='px-3 py-1.5 rounded-lg border border-white/10 text-white text-sm disabled:opacity-50'
+      >
+        Previous
+      </button>
+      <span className='text-xs text-gray-400'>
+        Page {page} of {totalPages}
+      </span>
+      <button
+        onClick={next}
+        disabled={(page || 1) >= (totalPages || 1)}
+        className='px-3 py-1.5 rounded-lg border border-white/10 text-white text-sm disabled:opacity-50'
+      >
+        Next
+      </button>
     </div>
   );
 }

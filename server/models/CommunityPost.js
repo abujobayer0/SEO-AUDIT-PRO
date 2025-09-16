@@ -31,4 +31,8 @@ const CommunityPostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Text index to allow efficient search across multiple fields
+// Note: ensure indexes are built in your environment (e.g., on server start)
+CommunityPostSchema.index({ title: "text", content: "text", tags: "text", authorName: "text" });
+
 module.exports = mongoose.models.CommunityPost || mongoose.model("CommunityPost", CommunityPostSchema);

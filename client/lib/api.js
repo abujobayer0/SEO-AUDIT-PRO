@@ -33,6 +33,10 @@ export const communityApi = {
     const res = await api.get("/community/posts", { params });
     return res.data;
   },
+  searchPosts: async (params = {}) => {
+    const res = await api.get("/community/posts/search", { params });
+    return res.data;
+  },
   getPost: async (id) => {
     const res = await api.get(`/community/posts/${id}`);
     return res.data;

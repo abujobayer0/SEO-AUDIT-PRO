@@ -38,6 +38,72 @@ router.get("/posts", async (req, res, next) => {
   }
 });
 
+// Search posts by text across title, content, tags, authorName
+router.get("/posts/search", async (req, res, next) => {
+  try {
+    const q = (req.query.q || "").trim();
+    const limit = Math.min(parseInt(req.query.limit || "10", 10), 50);
+    const page = parseInt(req.query.page || "1", 10);
+
+    if (!q) {
+      return res.status(400).json({ message: "Query 'q' is required" });
+    }
+
+    // Use text search for relevance; fallback to regex if needed
+    const searchStage = { $text: { $search: q } };
+    const projection = { score: { $meta: "textScore" } };
+
+    const totalMatches = await CommunityPost.countDocuments(searchStage);
+    const results = await CommunityPost.find(searchStage, projection)
+      .sort({ score: { $meta: "textScore" }, createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    // Basic highlight helper
+    const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const terms = q
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((t) => t.toLowerCase());
+    const rx = new RegExp(`(${terms.map(escape).join("|")})`, "gi");
+    const highlight = (text) => (text || "").slice(0, 4000).replace(rx, "<mark>$1</mark>");
+
+    const highlighted = results.map((p) => ({
+      ...p,
+      highlight: {
+        title: highlight(p.title),
+        content: highlight(p.content),
+        authorName: highlight(p.authorName || ""),
+        tags: (p.tags || []).map((t) => highlight(t)),
+      },
+    }));
+
+    // Similar results based on shared tags when available
+    let similar = [];
+    const tagSet = new Set();
+    results.forEach((p) => (p.tags || []).forEach((t) => tagSet.add(t)));
+    if (tagSet.size > 0) {
+      similar = await CommunityPost.find({ tags: { $in: Array.from(tagSet) }, _id: { $nin: results.map((r) => r._id) } })
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .lean();
+    }
+
+    res.json({
+      query: q,
+      page,
+      limit,
+      total: totalMatches,
+      totalPages: Math.max(1, Math.ceil(totalMatches / limit)),
+      results: highlighted,
+      similar,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Get single post
 router.get("/posts/:id", async (req, res, next) => {
   try {
