@@ -268,8 +268,15 @@ export default function CommunityPage() {
                             {(post.authorName || post.author?.name || "A").slice(0, 1).toUpperCase()}
                           </div>
                           <div>
-                            <h3 className='font-semibold leading-tight'>{post.title}</h3>
-                            <div className='text-xs text-gray-500'>{new Date(post.createdAt).toLocaleString()}</div>
+                            <h3 className='font-semibold leading-tight'>
+                              <Link href={`/community/${post._id}`} className='hover:underline'>
+                                {post.title}
+                              </Link>
+                            </h3>
+                            <div className='text-xs text-gray-500'>
+                              by <span className='text-gray-300'>{post.authorName || post.author?.name || "Anonymous"}</span> ·{" "}
+                              {new Date(post.createdAt).toLocaleString()}
+                            </div>
                           </div>
                         </div>
                         <div className='flex items-center gap-2 text-xs text-gray-400'>
@@ -281,7 +288,18 @@ export default function CommunityPage() {
                           </span>
                         </div>
                       </div>
-                      <p className='text-sm text-gray-200 whitespace-pre-wrap'>{post.content}</p>
+                      <p className='text-sm text-gray-200 whitespace-pre-wrap'>
+                        {post.content.length > 300 ? (
+                          <>
+                            {post.content.slice(0, 300)}…{" "}
+                            <Link href={`/community/${post._id}`} className='text-indigo-300 hover:text-indigo-200'>
+                              Read more
+                            </Link>
+                          </>
+                        ) : (
+                          post.content
+                        )}
+                      </p>
                       {post.tags?.length ? (
                         <div className='mt-3 flex flex-wrap gap-2'>
                           {post.tags.map((t) => (
@@ -369,8 +387,21 @@ function SearchResultItem({ post }) {
               {(post.authorName || post.author?.name || "A").slice(0, 1).toUpperCase()}
             </div>
             <div>
-              <h3 className='font-semibold leading-tight' dangerouslySetInnerHTML={{ __html: post.highlight?.title || post.title }} />
-              <div className='text-xs text-gray-500'>{new Date(post.createdAt).toLocaleString()}</div>
+              <h3 className='font-semibold leading-tight'>
+                <Link
+                  href={`/community/${post._id}`}
+                  className='hover:underline'
+                  dangerouslySetInnerHTML={{ __html: post.highlight?.title || post.title }}
+                />
+              </h3>
+              <div className='text-xs text-gray-500'>
+                by{" "}
+                <span
+                  className='text-gray-300'
+                  dangerouslySetInnerHTML={{ __html: post.highlight?.authorName || post.authorName || post.author?.name || "Anonymous" }}
+                />{" "}
+                · {new Date(post.createdAt).toLocaleString()}
+              </div>
             </div>
           </div>
         </div>
@@ -383,7 +414,7 @@ function SearchResultItem({ post }) {
             {(post.highlight?.tags?.length ? post.highlight.tags : post.tags).map((t, i) => (
               <span
                 key={`${t}-${i}`}
-                className='text-[10px] uppercase tracking-wide border border-indigo-500/20 bg-indigo-500/10 text-indigo-300 px-2 py-1 rounded-full'
+                className='text:[10px] uppercase tracking-wide border border-indigo-500/20 bg-indigo-500/10 text-indigo-300 px-2 py-1 rounded-full'
                 dangerouslySetInnerHTML={{ __html: t }}
               />
             ))}
