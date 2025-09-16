@@ -11,6 +11,7 @@ import StarBorder from "../../components/StarBorder";
 import ShinyText from "../../components/ShinyText";
 import ScrollReveal from "../../components/ScrollReveal";
 import LaserFlow from "../../components/LaserFlow";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const [url, setUrl] = useState("");
@@ -180,11 +181,13 @@ export default function DashboardPage() {
       {/* Header - Absolute positioned like landing page */}
       <header className='bg-black/30 backdrop-blur-md w-[90%] rounded-full absolute shadow-xl border border-white/10 top-4 left-1/2 transform -translate-x-1/2 z-50'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='flex justify-between items-center py-6'>
-            <div className='flex items-center'>
-              <BarChart3 className='h-8 w-8 text-white' />
-              <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
-            </div>
+          <div className='flex justify-between items-center py-3'>
+            <Link href={"/"}>
+              <div className='flex items-center'>
+                <BarChart3 className='h-6 w-6 text-white' />
+                <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
+              </div>
+            </Link>
             <div className='flex items-center space-x-4'>
               <StarBorder
                 as='button'

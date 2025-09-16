@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { communityApi } from "@/lib/api";
 import ShinyText from "@/components/ShinyText";
 import GradientBlinds from "@/components/GradientBlinds";
+import { useRouter } from "next/navigation";
+import { BarChart3 } from "lucide-react";
+import Link from "next/link";
 
 export default function CommunityPage() {
+  const router = useRouter();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -77,6 +81,24 @@ export default function CommunityPage() {
 
   return (
     <div className='max-w-7xl mx-auto px-4 py-10'>
+      <header className='bg-black/30 backdrop-blur-md w-full rounded-full shadow-xl border border-white/10 mb-6'>
+        <div className='px-4 sm:px-6 lg:px-8'>
+          <div className='flex justify-between items-center py-3'>
+            <Link href={"/"}>
+              <div className='flex items-center'>
+                <BarChart3 className='h-6 w-6 text-white' />
+                <span className='ml-2 text-sm font-bold text-white'>SEO Audit Pro</span>
+              </div>
+            </Link>
+            <button
+              onClick={() => router.push("/")}
+              className='px-3 py-1.5 rounded-full text-white border border-white/20 hover:border-white/50 transition-all text-sm'
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </header>
       <div className='relative overflow-hidden rounded-2xl border border-white/10 p-[1px] mb-10'>
         <div className='absolute inset-0  pointer-events-none'>
           <GradientBlinds

@@ -15,12 +15,14 @@ const AuditHeader = ({ audit, onDownloadPdf }) => {
       {/* Header */}
       <header className='bg-black/40 backdrop-blur-2xl w-[90%] rounded-full absolute shadow-2xl border border-white/10 top-4 left-1/2 transform -translate-x-1/2 z-50'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='flex justify-between items-center py-6'>
+          <div className='flex justify-between items-center py-3'>
             <div className='flex items-center space-x-6'>
-              <div className='flex items-center'>
-                <BarChart3 className='h-8 w-8 text-white' />
-                <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
-              </div>
+              <Link href={"/"}>
+                <div className='flex items-center'>
+                  <BarChart3 className='h-8 w-8 text-white' />
+                  <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
+                </div>
+              </Link>
             </div>
             <div className='flex items-center space-x-4'>
               <StarBorder as='button' onClick={onDownloadPdf} color='rgba(255, 255, 255, 0.6)' thickness={1} className='px-6 py-3'>

@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { BarChart3, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../../lib/api";
 import ShinyText from "../../components/ShinyText";
 import StarBorder from "../../components/StarBorder";
+import Link from "next/link";
 
 export default function Settings() {
   const [user, setUser] = useState(null);
@@ -127,32 +128,37 @@ export default function Settings() {
 
   return (
     <div className='min-h-screen bg-black'>
-      {/* Header */}
-      <header className='bg-black/30 backdrop-blur-md shadow border-b border-white/10'>
+      {/* Header - match landing/dashboard style */}
+      <header className='bg-black/30 backdrop-blur-md w-[90%] rounded-full absolute shadow-xl border border-white/10 top-4 left-1/2 transform -translate-x-1/2 z-50'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-          <div className='flex justify-between items-center py-6'>
-            <div className='flex items-center'>
-              <Link href='/dashboard' className='text-2xl font-bold text-white'>
-                SEO Audit Pro
-              </Link>
-            </div>
-            <nav className='flex space-x-8'>
-              <Link href='/dashboard' className='text-gray-100 hover:text-white'>
+          <div className='flex justify-between items-center py-3'>
+            <Link href={"/"}>
+              <div className='flex items-center'>
+                <BarChart3 className='h-6 w-6 text-white' />
+                <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
+              </div>
+            </Link>
+            <div className='flex items-center space-x-4'>
+              <StarBorder
+                as='button'
+                onClick={() => router.push("/dashboard")}
+                color='rgba(255, 255, 255, 0.4)'
+                thickness={1}
+                className='px-4 py-2'
+              >
                 Dashboard
-              </Link>
-              <span className='text-white font-medium'>
-                <ShinyText text='Settings' speed={6} />
-              </span>
-              <button onClick={logout} className='text-gray-100 hover:text-white/80'>
+              </StarBorder>
+              <StarBorder as='button' onClick={logout} color='rgba(255, 255, 255, 0.6)' thickness={1} className='px-4 py-2'>
+                <LogOut className='h-4 w-4 mr-2' />
                 Logout
-              </button>
-            </nav>
+              </StarBorder>
+            </div>
           </div>
         </div>
       </header>
 
       <div className='max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8'>
-        <div className=''>
+        <div className='pt-24'>
           <div className='px-6 py-4 border-b border-white/10'>
             <h1 className='text-2xl font-bold text-white'>
               Account <ShinyText text='Settings' className='font-bold' speed={7} />
