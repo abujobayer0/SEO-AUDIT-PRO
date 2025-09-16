@@ -75,8 +75,8 @@ const ImagesAnalysis = ({ imagesData }) => {
       {imagesData.list && imagesData.list.length > 0 && (
         <div>
           <h3 className='font-semibold text-white mb-4'>Images Found on Page:</h3>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto'>
-            {imagesData.list.slice(0, 20).map((image, index) => (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[70vh] overflow-y-auto'>
+            {imagesData.list.map((image, index) => (
               <div key={index} className='border border-white/10 rounded-lg p-3 bg-black/40 backdrop-blur-lg shadow-lg'>
                 <div className='flex items-start space-x-3'>
                   <div className='flex-shrink-0'>
@@ -158,14 +158,7 @@ const ImagesAnalysis = ({ imagesData }) => {
               </div>
             ))}
           </div>
-          {imagesData.list.length > 20 && (
-            <div className='flex items-center justify-between mt-4'>
-              <p className='text-gray-400'>Showing first 20 of {imagesData.list.length} images</p>
-              <Link href={`#`} className='text-blue-400 hover:text-blue-300 text-sm' onClick={(e) => e.preventDefault()}>
-                Load more coming soon
-              </Link>
-            </div>
-          )}
+          {/* Show all images; no truncation */}
         </div>
       )}
     </SpotlightCard>

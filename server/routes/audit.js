@@ -311,9 +311,9 @@ router.post("/", auth, async (req, res) => {
     cleanLinks.total = Number.isFinite(cleanLinks.total) ? cleanLinks.total : computedLinksCount;
     cleanImages.total = Number.isFinite(cleanImages.total) ? cleanImages.total : computedImagesCount;
 
-    // Persist withoutText fields (added by service) but do not persist raw list
+    // Persist full lists; also persist counts
     if (!Number.isFinite(cleanLinks.withoutTextCount)) cleanLinks.withoutTextCount = cleanLinks.withoutText.length || 0;
-    cleanLinks.list = [];
+    if (!Number.isFinite(cleanLinks.total)) cleanLinks.total = computedLinksCount;
 
     const cleanAuditData = {
       ...auditData,
@@ -712,8 +712,8 @@ router.post("/:auditId/competitors", auth, async (req, res) => {
           compContent.topKeywords = [];
         }
 
-        // Drop links.list to avoid validation errors
-        compLinks.list = [];
+        // Keep full lists for competitors as well
+        if (!Number.isFinite(compLinks.total)) compLinks.total = Array.isArray(compLinks.list) ? compLinks.list.length : 0;
 
         // Save competitor audit with proper data validation
         const competitorDataToSave = {

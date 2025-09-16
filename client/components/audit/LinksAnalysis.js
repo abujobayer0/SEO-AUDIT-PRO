@@ -125,9 +125,9 @@ const LinksAnalysis = ({ linksData }) => {
             </button>
           </div>
 
-          <div className='max-h-96 overflow-y-auto'>
+          <div className='max-h-[70vh] overflow-y-auto'>
             <div className='space-y-2'>
-              {linksData.list.slice(0, 50).map((link, index) => (
+              {linksData.list.map((link, index) => (
                 <div key={index} className='border border-white/10 rounded-lg p-3 bg-black/40 backdrop-blur-lg shadow-lg'>
                   <div className='flex items-start justify-between'>
                     <div className='flex-1 min-w-0'>
@@ -233,9 +233,7 @@ const LinksAnalysis = ({ linksData }) => {
                 </div>
               ))}
             </div>
-            {linksData.list.length > 50 && (
-              <p className='text-gray-400 text-center mt-4'>Showing first 50 of {linksData.list.length} links</p>
-            )}
+            {/* Show all links; no truncation */}
           </div>
         </div>
       )}

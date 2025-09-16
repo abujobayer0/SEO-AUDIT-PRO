@@ -65,7 +65,7 @@ const ContentAnalysis = ({ contentData }) => {
         <h3 className='text-lg font-semibold text-white mb-3'>Top Keywords</h3>
         {contentData.topKeywords && contentData.topKeywords.length > 0 ? (
           <div className='space-y-2'>
-            {contentData.topKeywords.slice(0, 10).map((keyword, index) => (
+            {contentData.topKeywords.map((keyword, index) => (
               <div
                 key={index}
                 className='flex items-center justify-between bg-black/40 backdrop-blur-lg p-3 rounded border border-white/5 shadow-lg'

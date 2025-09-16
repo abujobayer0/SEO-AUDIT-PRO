@@ -98,29 +98,25 @@ class SEOAuditService {
               title: lhr.audits[ref.id].title,
               description: lhr.audits[ref.id].description,
               savings: lhr.audits[ref.id].details?.overallSavingsMs || 0,
-            }))
-            .slice(0, 5),
+            })),
         },
         accessibility: {
           score: Math.round((categories.accessibility?.score || 0) * 100),
           issues: (lhr.categories.accessibility?.auditRefs || [])
             .filter((ref) => lhr.audits[ref.id]?.score < 1)
-            .map((ref) => lhr.audits[ref.id].title)
-            .slice(0, 10),
+            .map((ref) => lhr.audits[ref.id].title),
         },
         seo: {
           score: Math.round((categories.seo?.score || 0) * 100),
           issues: (lhr.categories.seo?.auditRefs || [])
             .filter((ref) => lhr.audits[ref.id]?.score < 1)
-            .map((ref) => lhr.audits[ref.id].title)
-            .slice(0, 10),
+            .map((ref) => lhr.audits[ref.id].title),
         },
         bestPractices: {
           score: Math.round((categories["best-practices"]?.score || 0) * 100),
           issues: (lhr.categories["best-practices"]?.auditRefs || [])
             .filter((ref) => lhr.audits[ref.id]?.score < 1)
-            .map((ref) => lhr.audits[ref.id].title)
-            .slice(0, 10),
+            .map((ref) => lhr.audits[ref.id].title),
         },
       };
     } catch (error) {
