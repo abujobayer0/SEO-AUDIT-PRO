@@ -13,12 +13,19 @@ import ShinyText from "../components/ShinyText";
 import CircularGallery from "../components/CircularGallery";
 import RippleGrid from "../components/RippleGrid";
 import Threads from "@/components/Threads";
+import LogoLoop from "@/components/LogoLoop";
+import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
+  const techLogos = [
+    { node: <SiReact />, title: "React", href: "https://react.dev" },
+    { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
+    { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+    { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  ];
   const handleAudit = async (e) => {
     e.preventDefault();
 
@@ -51,6 +58,12 @@ export default function HomePage() {
               <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
             </div>
             <div className='flex space-x-4'>
+              <button
+                onClick={() => router.push("/community")}
+                className='px-4 py-2 rounded-full text-white border border-white/20 hover:border-white/50 transition-all'
+              >
+                Community
+              </button>
               <button
                 onClick={() => router.push("/login")}
                 className='px-4 py-2 rounded-full text-white border border-white/20 hover:border-white/50 transition-all'
@@ -130,7 +143,18 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+      <LogoLoop
+        logos={techLogos}
+        speed={120}
+        direction='left'
+        logoHeight={48}
+        gap={40}
+        pauseOnHover
+        scaleOnHover
+        fadeOut
+        fadeOutColor='#000'
+        ariaLabel='Technology partners'
+      />
       {/* About Section with ScrollReveal */}
       <section className='py-32 w-full'>
         <div className='max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8'>

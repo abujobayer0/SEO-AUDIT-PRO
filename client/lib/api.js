@@ -27,3 +27,26 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+export const communityApi = {
+  listPosts: async (params = {}) => {
+    const res = await api.get("/community/posts", { params });
+    return res.data;
+  },
+  getPost: async (id) => {
+    const res = await api.get(`/community/posts/${id}`);
+    return res.data;
+  },
+  createPost: async (payload) => {
+    const res = await api.post("/community/posts", payload);
+    return res.data;
+  },
+  addComment: async (id, payload) => {
+    const res = await api.post(`/community/posts/${id}/comments`, payload);
+    return res.data;
+  },
+  addReply: async (postId, commentId, payload) => {
+    const res = await api.post(`/community/posts/${postId}/comments/${commentId}/replies`, payload);
+    return res.data;
+  },
+};

@@ -11,6 +11,7 @@ const reportRoutes = require("./routes/reports");
 const userRoutes = require("./routes/users");
 const passwordResetRoutes = require("./routes/password-reset");
 const emailVerificationRoutes = require("./routes/email-verification");
+const communityRoutes = require("./routes/community");
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/password", passwordResetRoutes);
 app.use("/api/email", emailVerificationRoutes);
+app.use("/api/community", communityRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
