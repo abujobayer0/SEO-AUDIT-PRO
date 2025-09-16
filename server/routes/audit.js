@@ -222,7 +222,13 @@ router.post("/", auth, async (req, res) => {
         console.log("content.topKeywords string (first 100 chars):", cleanContent.topKeywords.substring(0, 100));
 
         // Try to parse the string as JSON
-        cleanContent.topKeywords = JSON.parse(cleanContent.topKeywords);
+        try {
+          cleanContent.topKeywords = JSON.parse(cleanContent.topKeywords);
+        } catch (_) {
+          // Attempt to convert single-quoted pseudo-JSON to valid JSON
+          const normalized = cleanContent.topKeywords.replace(/'/g, '"').replace(/\b(undefined|null)\b/g, "null");
+          cleanContent.topKeywords = JSON.parse(normalized);
+        }
         console.log("Successfully parsed content.topKeywords from string");
       } catch (e) {
         console.log("Failed to parse content.topKeywords, error:", e.message);
@@ -454,7 +460,7 @@ router.get("/stats/overview", auth, async (req, res) => {
     const uniqueWebsites = await Audit.aggregate([
       { $match: { userId: req.user._id } },
       { $group: { _id: "$websiteUrl" } },
-      { $count: "uniqueWebsites" }
+      { $count: "uniqueWebsites" },
     ]);
     const websitesTracked = uniqueWebsites.length > 0 ? uniqueWebsites[0].uniqueWebsites : 0;
 

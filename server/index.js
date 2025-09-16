@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
@@ -32,9 +33,11 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Body parsing middleware
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true }));
+// Body parsing middleware (using body-parser for robustness)
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
+// Optional: accept plain text payloads if needed (e.g., logs/webhooks)
+app.use(bodyParser.text({ type: ["text/*", "application/xml", "application/x-www-form-urlencoded"], limit: "2mb" }));
 
 // MongoDB connection
 mongoose

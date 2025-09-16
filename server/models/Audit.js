@@ -305,8 +305,6 @@ const auditSchema = new mongoose.Schema({
 auditSchema.index({ userId: 1, createdAt: -1 });
 auditSchema.index({ websiteUrl: 1 });
 
-module.exports = mongoose.model("Audit", auditSchema);
-
 // Coercion hook to avoid cast errors from inconsistent upstream data
 auditSchema.pre("validate", function (next) {
   try {
@@ -354,3 +352,5 @@ auditSchema.pre("validate", function (next) {
   } catch (_) {}
   next();
 });
+
+module.exports = mongoose.model("Audit", auditSchema);
