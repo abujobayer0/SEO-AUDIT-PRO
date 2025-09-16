@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { ArrowLeft, Download, Globe, Clock, BarChart3, Share2, CheckCheck } from "lucide-react";
+import { ArrowLeft, Download, Globe, Clock, Share2, CheckCheck } from "lucide-react";
 import StarBorder from "../StarBorder";
 import SpotlightCard from "../SpotlightCard";
 import { useState } from "react";
 import { reportsApi } from "@/lib/api";
+import Logo from "@/components/Logo";
 
 const AuditHeader = ({ audit, onDownloadPdf }) => {
   const [shareBusy, setShareBusy] = useState(false);
@@ -42,8 +43,7 @@ const AuditHeader = ({ audit, onDownloadPdf }) => {
             <div className='flex items-center space-x-6'>
               <Link href={"/"}>
                 <div className='flex items-center'>
-                  <BarChart3 className='h-8 w-8 text-white' />
-                  <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
+                  <Logo size={28} showText={true} />
                 </div>
               </Link>
             </div>

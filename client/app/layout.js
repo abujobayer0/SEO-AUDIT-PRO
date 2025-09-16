@@ -3,30 +3,32 @@ import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import ClickSpark from "../components/ClickSpark";
 import { Analytics } from "@vercel/analytics/next";
+import { BRAND } from "@/lib/brand";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "SEO Audit Tool - White Label Solution",
-  description: "Professional SEO audit tool for agencies with white-label reporting",
-  metadataBase: new URL("https://example.com"),
+  title: `${BRAND.name} – ${BRAND.tagline}`,
+  description: BRAND.tagline,
+  metadataBase: new URL(BRAND.url),
   openGraph: {
-    title: "SEO Audit Tool - White Label Solution",
-    description: "Professional SEO audit tool for agencies with white-label reporting",
+    title: `${BRAND.name} – ${BRAND.tagline}`,
+    description: BRAND.tagline,
     type: "website",
     images: [
       {
-        url: "https://og-playground.vercel.app/api/card?title=SEO%20Audit%20Pro&subtitle=White‑Label%20SEO%20Reports",
+        url: BRAND.ogImage,
         width: 1200,
         height: 630,
-        alt: "SEO Audit Pro - White‑Label SEO Reports",
+        alt: `${BRAND.name} – ${BRAND.tagline}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SEO Audit Tool - White Label Solution",
-    description: "Professional SEO audit tool for agencies with white-label reporting",
-    images: ["https://og-playground.vercel.app/api/card?title=SEO%20Audit%20Pro&subtitle=White‑Label%20SEO%20Reports"],
+    title: `${BRAND.name} – ${BRAND.tagline}`,
+    description: BRAND.tagline,
+    images: [BRAND.ogImage],
+    site: BRAND.social?.twitter,
   },
 };
 

@@ -1,24 +1,27 @@
+import { BRAND } from "@/lib/brand";
+
 export const metadata = {
-  title: "Dashboard – SEO Audit Pro",
+  title: `Dashboard – ${BRAND.name}`,
   description: "Run audits, view reports, and manage your SEO intelligence.",
   openGraph: {
-    title: "Dashboard – SEO Audit Pro",
+    title: `Dashboard – ${BRAND.name}`,
     description: "Run audits, view reports, and manage your SEO intelligence.",
     type: "website",
     images: [
       {
-        url: "https://og-playground.vercel.app/api/card?title=Dashboard&subtitle=Run%20audits%20and%20reports",
+        url: BRAND.ogImage,
         width: 1200,
         height: 630,
-        alt: "Dashboard – SEO Audit Pro",
+        alt: `Dashboard – ${BRAND.name}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dashboard – SEO Audit Pro",
+    title: `Dashboard – ${BRAND.name}`,
     description: "Run audits, view reports, and manage your SEO intelligence.",
-    images: ["https://og-playground.vercel.app/api/card?title=Dashboard&subtitle=Run%20audits%20and%20reports"],
+    images: [BRAND.ogImage],
+    site: BRAND.social?.twitter,
   },
 };
 

@@ -1,24 +1,27 @@
+import { BRAND } from "@/lib/brand";
+
 export const metadata = {
-  title: "Forgot password – SEO Audit Pro",
-  description: "Receive password reset instructions for your SEO Audit Pro account.",
+  title: `Forgot password – ${BRAND.name}`,
+  description: `Receive password reset instructions for your ${BRAND.name} account.`,
   openGraph: {
-    title: "Forgot password – SEO Audit Pro",
+    title: `Forgot password – ${BRAND.name}`,
     description: "Receive password reset instructions for your account.",
     type: "website",
     images: [
       {
-        url: "https://og-playground.vercel.app/api/card?title=Forgot%20password&subtitle=Reset%20your%20access",
+        url: BRAND.ogImage,
         width: 1200,
         height: 630,
-        alt: "Forgot password – SEO Audit Pro",
+        alt: `Forgot password – ${BRAND.name}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Forgot password – SEO Audit Pro",
+    title: `Forgot password – ${BRAND.name}`,
     description: "Receive password reset instructions for your account.",
-    images: ["https://og-playground.vercel.app/api/card?title=Forgot%20password&subtitle=Reset%20your%20access"],
+    images: [BRAND.ogImage],
+    site: BRAND.social?.twitter,
   },
 };
 
