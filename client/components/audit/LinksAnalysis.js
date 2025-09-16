@@ -1,4 +1,5 @@
 import { ExternalLink, AlertTriangle, CheckCircle } from "lucide-react";
+import SpotlightCard from "../SpotlightCard";
 
 const LinksAnalysis = ({ linksData }) => {
   if (!linksData) return null;
@@ -7,91 +8,91 @@ const LinksAnalysis = ({ linksData }) => {
   const linksNoTextCount = linksNoTextIssue ? parseInt(linksNoTextIssue, 10) || 0 : 0;
 
   return (
-    <div className='bg-white rounded-lg shadow p-6 mb-8'>
-      <h2 className='text-xl font-bold text-gray-900 mb-4 flex items-center'>
-        <ExternalLink className='w-6 h-6 mr-2 text-green-600' />
+    <SpotlightCard className='bg-black/80 backdrop-blur-xl border-white/5 shadow-2xl mb-8' spotlightColor='rgba(34, 197, 94, 0.15)'>
+      <h2 className='text-xl font-bold text-white mb-4 flex items-center'>
+        <ExternalLink className='w-6 h-6 mr-2 text-green-400' />
         Links Analysis ({linksData.total || 0} links found)
       </h2>
 
       {/* Enhanced Statistics */}
       <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6'>
         <div className='text-center'>
-          <div className='text-2xl font-bold text-blue-600'>{linksData.total || 0}</div>
-          <p className='text-sm text-gray-600'>Total Links</p>
+          <div className='text-2xl font-bold text-blue-400'>{linksData.total || 0}</div>
+          <p className='text-sm text-gray-300'>Total Links</p>
         </div>
         <div className='text-center'>
-          <div className='text-2xl font-bold text-green-600'>{linksData.external || 0}</div>
-          <p className='text-sm text-gray-600'>External</p>
+          <div className='text-2xl font-bold text-green-400'>{linksData.external || 0}</div>
+          <p className='text-sm text-gray-300'>External</p>
         </div>
         <div className='text-center'>
-          <div className='text-2xl font-bold text-blue-500'>{linksData.internal || 0}</div>
-          <p className='text-sm text-gray-600'>Internal</p>
+          <div className='text-2xl font-bold text-blue-400'>{linksData.internal || 0}</div>
+          <p className='text-sm text-gray-300'>Internal</p>
         </div>
         <div className='text-center'>
-          <div className='text-2xl font-bold text-purple-600'>{linksData.anchor || 0}</div>
-          <p className='text-sm text-gray-600'>Anchor</p>
+          <div className='text-2xl font-bold text-purple-400'>{linksData.anchor || 0}</div>
+          <p className='text-sm text-gray-300'>Anchor</p>
         </div>
         <div className='text-center'>
-          <div className='text-2xl font-bold text-red-600'>{linksData.broken || 0}</div>
-          <p className='text-sm text-gray-600'>Broken</p>
+          <div className='text-2xl font-bold text-red-400'>{linksData.broken || 0}</div>
+          <p className='text-sm text-gray-300'>Broken</p>
         </div>
         <div className='text-center'>
-          <div className='text-2xl font-bold text-yellow-600'>{linksData.noFollow || 0}</div>
-          <p className='text-sm text-gray-600'>NoFollow</p>
+          <div className='text-2xl font-bold text-yellow-400'>{linksData.noFollow || 0}</div>
+          <p className='text-sm text-gray-300'>NoFollow</p>
         </div>
       </div>
 
       {/* Link Analysis Details */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
-        <div className='bg-blue-50 p-4 rounded-lg text-center'>
-          <div className='text-lg font-bold text-blue-900'>{linksData.opensInNewTab || 0}</div>
-          <p className='text-sm text-blue-700'>Open in New Tab</p>
+        <div className='bg-blue-500/20 p-4 rounded-lg text-center border border-blue-400/30'>
+          <div className='text-lg font-bold text-white'>{linksData.opensInNewTab || 0}</div>
+          <p className='text-sm text-blue-400'>Open in New Tab</p>
         </div>
-        <div className='bg-red-50 p-4 rounded-lg text-center'>
-          <div className='text-lg font-bold text-red-900'>{linksData.insecure || 0}</div>
-          <p className='text-sm text-red-700'>Insecure HTTP</p>
+        <div className='bg-red-500/20 p-4 rounded-lg text-center border border-red-400/30'>
+          <div className='text-lg font-bold text-white'>{linksData.insecure || 0}</div>
+          <p className='text-sm text-red-400'>Insecure HTTP</p>
         </div>
-        <div className='bg-orange-50 p-4 rounded-lg text-center'>
-          <div className='text-lg font-bold text-orange-900'>{linksData.withoutTextCount || 0}</div>
-          <p className='text-sm text-orange-700'>Without Text</p>
+        <div className='bg-orange-500/20 p-4 rounded-lg text-center border border-orange-400/30'>
+          <div className='text-lg font-bold text-white'>{linksData.withoutTextCount || 0}</div>
+          <p className='text-sm text-orange-400'>Without Text</p>
         </div>
       </div>
 
       {/* Link Analysis Summary */}
       {linksData.analysis && (
         <div className='mb-6'>
-          <h3 className='text-lg font-semibold text-gray-900 mb-3'>Link Analysis Summary</h3>
+          <h3 className='text-lg font-semibold text-white mb-3'>Link Analysis Summary</h3>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-            <div className='bg-gray-50 p-4 rounded-lg'>
-              <div className='text-sm text-gray-600'>Link Density</div>
-              <div className='text-lg font-bold text-gray-900'>{linksData.analysis.linkDensity?.toFixed(2) || 0} per 1000 chars</div>
+            <div className='bg-black/60 p-4 rounded-lg border border-white/10'>
+              <div className='text-sm text-gray-300'>Link Density</div>
+              <div className='text-lg font-bold text-white'>{linksData.analysis.linkDensity?.toFixed(2) || 0} per 1000 chars</div>
             </div>
-            <div className='bg-gray-50 p-4 rounded-lg'>
-              <div className='text-sm text-gray-600'>Average Link Length</div>
-              <div className='text-lg font-bold text-gray-900'>{linksData.analysis.averageLinkLength?.toFixed(1) || 0} chars</div>
+            <div className='bg-black/60 p-4 rounded-lg border border-white/10'>
+              <div className='text-sm text-gray-300'>Average Link Length</div>
+              <div className='text-lg font-bold text-white'>{linksData.analysis.averageLinkLength?.toFixed(1) || 0} chars</div>
             </div>
-            <div className='bg-gray-50 p-4 rounded-lg'>
-              <div className='text-sm text-gray-600'>Common Domains</div>
-              <div className='text-lg font-bold text-gray-900'>{Object.keys(linksData.analysis.commonDomains || {}).length}</div>
+            <div className='bg-black/60 p-4 rounded-lg border border-white/10'>
+              <div className='text-sm text-gray-300'>Common Domains</div>
+              <div className='text-lg font-bold text-white'>{Object.keys(linksData.analysis.commonDomains || {}).length}</div>
             </div>
           </div>
         </div>
       )}
 
       {linksNoTextCount > 0 && (
-        <div className='mb-4 text-sm text-gray-700'>
+        <div className='mb-4 text-sm text-gray-300'>
           <span className='font-medium'>Links without descriptive text:</span>{" "}
-          <span className='text-red-600 font-semibold'>{linksNoTextCount}</span>
+          <span className='text-red-400 font-semibold'>{linksNoTextCount}</span>
         </div>
       )}
 
       {/* Issues */}
       {linksData.issues && linksData.issues.length > 0 && (
         <div className='mb-6'>
-          <h3 className='font-semibold text-gray-900 mb-2'>Issues Found:</h3>
+          <h3 className='font-semibold text-white mb-2'>Issues Found:</h3>
           <ul className='space-y-1'>
             {linksData.issues.map((issue, index) => (
-              <li key={index} className='flex items-center text-red-600'>
+              <li key={index} className='flex items-center text-red-400'>
                 <AlertTriangle className='w-4 h-4 mr-2' />
                 {issue}
               </li>
@@ -103,21 +104,23 @@ const LinksAnalysis = ({ linksData }) => {
       {/* Enhanced Link List */}
       {linksData.list && linksData.list.length > 0 && (
         <div>
-          <h3 className='font-semibold text-gray-900 mb-4'>Links Found on Page:</h3>
+          <h3 className='font-semibold text-white mb-4'>Links Found on Page:</h3>
 
           {/* Filter Tabs */}
           <div className='flex flex-wrap gap-2 mb-4'>
-            <button className='px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm'>All ({linksData.list.length})</button>
-            <button className='px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm'>
+            <button className='px-3 py-1 bg-blue-500/20 text-blue-400 rounded text-sm border border-blue-400/30'>
+              All ({linksData.list.length})
+            </button>
+            <button className='px-3 py-1 bg-gray-500/20 text-gray-300 rounded text-sm border border-gray-400/30'>
               External ({linksData.list.filter((link) => link.type === "external").length})
             </button>
-            <button className='px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm'>
+            <button className='px-3 py-1 bg-gray-500/20 text-gray-300 rounded text-sm border border-gray-400/30'>
               Internal ({linksData.list.filter((link) => link.type === "internal").length})
             </button>
-            <button className='px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm'>
+            <button className='px-3 py-1 bg-gray-500/20 text-gray-300 rounded text-sm border border-gray-400/30'>
               Anchor ({linksData.list.filter((link) => link.type === "anchor").length})
             </button>
-            <button className='px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm'>
+            <button className='px-3 py-1 bg-gray-500/20 text-gray-300 rounded text-sm border border-gray-400/30'>
               Broken ({linksData.list.filter((link) => !link.isWorking).length})
             </button>
           </div>
@@ -125,7 +128,7 @@ const LinksAnalysis = ({ linksData }) => {
           <div className='max-h-96 overflow-y-auto'>
             <div className='space-y-2'>
               {linksData.list.slice(0, 50).map((link, index) => (
-                <div key={index} className='border border-gray-200 rounded-lg p-3 bg-gray-50'>
+                <div key={index} className='border border-white/10 rounded-lg p-3 bg-black/40 backdrop-blur-lg shadow-lg'>
                   <div className='flex items-start justify-between'>
                     <div className='flex-1 min-w-0'>
                       <div className='flex items-center space-x-2 mb-2'>
@@ -170,15 +173,15 @@ const LinksAnalysis = ({ linksData }) => {
                         )}
                       </div>
 
-                      <p className='text-sm font-medium text-gray-900 truncate' title={link.text || "No anchor text"}>
+                      <p className='text-sm font-medium text-white truncate' title={link.text || "No anchor text"}>
                         {link.text || "No anchor text"}
                       </p>
 
-                      <p className='text-xs text-gray-600 truncate mt-1' title={link.href}>
+                      <p className='text-xs text-gray-300 truncate mt-1' title={link.href}>
                         {link.href}
                       </p>
 
-                      {link.title && <p className='text-xs text-gray-500 mt-1'>Title: {link.title}</p>}
+                      {link.title && <p className='text-xs text-gray-400 mt-1'>Title: {link.title}</p>}
 
                       {/* Link Quality Indicators */}
                       <div className='mt-2 flex flex-wrap gap-1'>
@@ -199,8 +202,8 @@ const LinksAnalysis = ({ linksData }) => {
                       {link.quality && link.quality.score < 100 && (
                         <div className='mt-2'>
                           <div className='flex items-center'>
-                            <span className='text-xs text-gray-600'>Quality:</span>
-                            <div className='flex-1 bg-gray-200 rounded-full h-1 ml-2'>
+                            <span className='text-xs text-gray-300'>Quality:</span>
+                            <div className='flex-1 bg-gray-600 rounded-full h-1 ml-2'>
                               <div
                                 className={`h-1 rounded-full ${
                                   link.quality.score >= 80 ? "bg-green-500" : link.quality.score >= 60 ? "bg-yellow-500" : "bg-red-500"
@@ -208,7 +211,7 @@ const LinksAnalysis = ({ linksData }) => {
                                 style={{ width: `${link.quality.score}%` }}
                               ></div>
                             </div>
-                            <span className='text-xs text-gray-600 ml-2'>{link.quality.score}</span>
+                            <span className='text-xs text-gray-300 ml-2'>{link.quality.score}</span>
                           </div>
                         </div>
                       )}
@@ -231,12 +234,12 @@ const LinksAnalysis = ({ linksData }) => {
               ))}
             </div>
             {linksData.list.length > 50 && (
-              <p className='text-gray-500 text-center mt-4'>Showing first 50 of {linksData.list.length} links</p>
+              <p className='text-gray-400 text-center mt-4'>Showing first 50 of {linksData.list.length} links</p>
             )}
           </div>
         </div>
       )}
-    </div>
+    </SpotlightCard>
   );
 };
 

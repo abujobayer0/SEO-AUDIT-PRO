@@ -18,6 +18,7 @@ import LinksAnalysis from "../../../components/audit/LinksAnalysis";
 import CompetitorAnalysis from "../../../components/audit/CompetitorAnalysis";
 import IssuesRecommendations from "../../../components/audit/IssuesRecommendations";
 import api from "@/lib/api";
+import PixelBlast from "@/components/PixelBlast";
 
 export default function AuditDetailPage() {
   const [audit, setAudit] = useState(null);
@@ -69,18 +70,18 @@ export default function AuditDetailPage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
-        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
+      <div className='min-h-screen bg-black flex items-center justify-center'>
+        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400'></div>
       </div>
     );
   }
 
   if (!audit) {
     return (
-      <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
+      <div className='min-h-screen bg-black flex items-center justify-center'>
         <div className='text-center'>
-          <h2 className='text-2xl font-bold text-gray-900 mb-4'>Audit Not Found</h2>
-          <Link href='/dashboard' className='text-blue-600 hover:text-blue-800'>
+          <h2 className='text-2xl font-bold text-white mb-4'>Audit Not Found</h2>
+          <Link href='/dashboard' className='text-blue-400 hover:text-blue-300'>
             ← Back to Dashboard
           </Link>
         </div>
@@ -92,9 +93,30 @@ export default function AuditDetailPage() {
 
   return (
     <div className='min-h-screen bg-black'>
+      <div className='w-full h-full absolute inset-0'>
+        <PixelBlast
+          variant='circle'
+          pixelSize={6}
+          color='#B19EEF'
+          patternScale={3}
+          patternDensity={1.2}
+          pixelSizeJitter={0.5}
+          enableRipples
+          rippleSpeed={0.4}
+          rippleThickness={0.12}
+          rippleIntensityScale={1.5}
+          liquid
+          liquidStrength={0.12}
+          liquidRadius={1.2}
+          liquidWobbleSpeed={5}
+          speed={0.6}
+          edgeFade={0.25}
+          transparent
+        />
+      </div>
       <AuditHeader audit={auditData} onDownloadPdf={handleDownloadPdf} />
 
-      <div className='max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8'>
+      <div className='max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 relative z-10'>
         <ScoreOverview auditData={auditData} />
 
         <PerformanceMetrics performanceData={auditData.performance} />

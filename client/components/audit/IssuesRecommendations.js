@@ -1,4 +1,5 @@
 import { AlertTriangle, CheckCircle } from "lucide-react";
+import SpotlightCard from "../SpotlightCard";
 
 const IssuesRecommendations = ({ auditData }) => {
   const issuesCategories = [
@@ -20,9 +21,9 @@ const IssuesRecommendations = ({ auditData }) => {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
       {/* Issues */}
-      <div className='bg-white rounded-lg shadow p-6'>
-        <h2 className='text-xl font-bold text-gray-900 mb-4 flex items-center'>
-          <AlertTriangle className='w-6 h-6 mr-2 text-red-600' />
+      <SpotlightCard className='bg-black/80 backdrop-blur-xl border-white/5 shadow-2xl' spotlightColor='rgba(239, 68, 68, 0.15)'>
+        <h2 className='text-xl font-bold text-white mb-4 flex items-center'>
+          <AlertTriangle className='w-6 h-6 mr-2 text-red-400' />
           Issues Found
         </h2>
         <div className='space-y-4'>
@@ -30,10 +31,10 @@ const IssuesRecommendations = ({ auditData }) => {
             ({ category, issues }) =>
               issues.length > 0 && (
                 <div key={category}>
-                  <h3 className='font-semibold text-gray-900 mb-2'>{category}</h3>
+                  <h3 className='font-semibold text-white mb-2'>{category}</h3>
                   <ul className='space-y-1 ml-4'>
                     {issues.map((issue, index) => (
-                      <li key={index} className='text-red-600 text-sm'>
+                      <li key={index} className='text-red-400 text-sm'>
                         • {issue}
                       </li>
                     ))}
@@ -42,12 +43,12 @@ const IssuesRecommendations = ({ auditData }) => {
               )
           )}
         </div>
-      </div>
+      </SpotlightCard>
 
       {/* Recommendations */}
-      <div className='bg-white rounded-lg shadow p-6'>
-        <h2 className='text-xl font-bold text-gray-900 mb-4 flex items-center'>
-          <CheckCircle className='w-6 h-6 mr-2 text-green-600' />
+      <SpotlightCard className='bg-black/80 backdrop-blur-xl border-white/5 shadow-2xl' spotlightColor='rgba(34, 197, 94, 0.15)'>
+        <h2 className='text-xl font-bold text-white mb-4 flex items-center'>
+          <CheckCircle className='w-6 h-6 mr-2 text-green-400' />
           Recommendations
         </h2>
         <div className='space-y-4'>
@@ -55,10 +56,10 @@ const IssuesRecommendations = ({ auditData }) => {
             ({ category, suggestions }) =>
               suggestions.length > 0 && (
                 <div key={category}>
-                  <h3 className='font-semibold text-gray-900 mb-2'>{category}</h3>
+                  <h3 className='font-semibold text-white mb-2'>{category}</h3>
                   <ul className='space-y-1 ml-4'>
                     {suggestions.map((suggestion, index) => (
-                      <li key={index} className='text-green-600 text-sm'>
+                      <li key={index} className='text-green-400 text-sm'>
                         • {suggestion}
                       </li>
                     ))}
@@ -67,7 +68,7 @@ const IssuesRecommendations = ({ auditData }) => {
               )
           )}
         </div>
-      </div>
+      </SpotlightCard>
     </div>
   );
 };

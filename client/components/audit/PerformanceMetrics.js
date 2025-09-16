@@ -1,24 +1,25 @@
 import { TrendingUp, AlertTriangle, CheckCircle } from "lucide-react";
+import SpotlightCard from "../SpotlightCard";
 
 const PerformanceMetrics = ({ performanceData }) => {
   if (!performanceData) return null;
 
   return (
-    <div className='bg-white rounded-lg shadow p-6 mb-8'>
-      <h2 className='text-xl font-bold text-gray-900 mb-6 flex items-center'>
-        <TrendingUp className='w-6 h-6 mr-2 text-blue-600' />
+    <SpotlightCard className='bg-black/80 backdrop-blur-xl border-white/5 shadow-2xl mb-8' spotlightColor='rgba(59, 130, 246, 0.15)'>
+      <h2 className='text-xl font-bold text-white mb-6 flex items-center'>
+        <TrendingUp className='w-6 h-6 mr-2 text-blue-400' />
         Performance Metrics
       </h2>
 
       {/* Core Web Vitals */}
       {performanceData.coreWebVitals && (
         <div className='mb-6'>
-          <h3 className='text-lg font-semibold text-gray-900 mb-4'>Core Web Vitals</h3>
+          <h3 className='text-lg font-semibold text-white mb-4'>Core Web Vitals</h3>
           <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4'>
             {Object.entries(performanceData.coreWebVitals).map(([key, value]) => (
-              <div key={key} className='bg-gray-50 p-4 rounded-lg'>
-                <p className='text-sm text-gray-600 capitalize'>{key.replace(/([A-Z])/g, " $1").trim()}</p>
-                <p className='text-lg font-semibold text-gray-900'>
+              <div key={key} className='bg-black/40 backdrop-blur-lg p-4 rounded-lg border border-white/5 shadow-lg'>
+                <p className='text-sm text-gray-300 capitalize'>{key.replace(/([A-Z])/g, " $1").trim()}</p>
+                <p className='text-lg font-semibold text-white'>
                   {typeof value === "number"
                     ? key.includes("Time") || key.includes("Paint")
                       ? `${Math.round(value)}ms`
@@ -36,39 +37,39 @@ const PerformanceMetrics = ({ performanceData }) => {
       {/* Additional Performance Metrics */}
       {performanceData.metrics && (
         <div className='mb-6'>
-          <h3 className='text-lg font-semibold text-gray-900 mb-4'>Detailed Performance Metrics</h3>
+          <h3 className='text-lg font-semibold text-white mb-4'>Detailed Performance Metrics</h3>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-            <div className='bg-blue-50 p-4 rounded-lg'>
-              <p className='text-sm text-blue-600'>DOM Content Loaded</p>
-              <p className='text-lg font-semibold text-blue-900'>{performanceData.metrics.domContentLoaded}ms</p>
+            <div className='bg-blue-500/20 p-4 rounded-lg border border-blue-400/30'>
+              <p className='text-sm text-blue-400'>DOM Content Loaded</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.domContentLoaded}ms</p>
             </div>
-            <div className='bg-green-50 p-4 rounded-lg'>
-              <p className='text-sm text-green-600'>Load Complete</p>
-              <p className='text-lg font-semibold text-green-900'>{performanceData.metrics.loadComplete}ms</p>
+            <div className='bg-green-500/20 p-4 rounded-lg border border-green-400/30'>
+              <p className='text-sm text-green-400'>Load Complete</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.loadComplete}ms</p>
             </div>
-            <div className='bg-purple-50 p-4 rounded-lg'>
-              <p className='text-sm text-purple-600'>DNS Time</p>
-              <p className='text-lg font-semibold text-purple-900'>{performanceData.metrics.dnsTime}ms</p>
+            <div className='bg-purple-500/20 p-4 rounded-lg border border-purple-400/30'>
+              <p className='text-sm text-purple-400'>DNS Time</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.dnsTime}ms</p>
             </div>
-            <div className='bg-orange-50 p-4 rounded-lg'>
-              <p className='text-sm text-orange-600'>TCP Time</p>
-              <p className='text-lg font-semibold text-orange-900'>{performanceData.metrics.tcpTime}ms</p>
+            <div className='bg-orange-500/20 p-4 rounded-lg border border-orange-400/30'>
+              <p className='text-sm text-orange-400'>TCP Time</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.tcpTime}ms</p>
             </div>
-            <div className='bg-red-50 p-4 rounded-lg'>
-              <p className='text-sm text-red-600'>Request Time</p>
-              <p className='text-lg font-semibold text-red-900'>{performanceData.metrics.requestTime}ms</p>
+            <div className='bg-red-500/20 p-4 rounded-lg border border-red-400/30'>
+              <p className='text-sm text-red-400'>Request Time</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.requestTime}ms</p>
             </div>
-            <div className='bg-yellow-50 p-4 rounded-lg'>
-              <p className='text-sm text-yellow-600'>Response Time</p>
-              <p className='text-lg font-semibold text-yellow-900'>{performanceData.metrics.responseTime}ms</p>
+            <div className='bg-yellow-500/20 p-4 rounded-lg border border-yellow-400/30'>
+              <p className='text-sm text-yellow-400'>Response Time</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.responseTime}ms</p>
             </div>
-            <div className='bg-indigo-50 p-4 rounded-lg'>
-              <p className='text-sm text-indigo-600'>Redirect Time</p>
-              <p className='text-lg font-semibold text-indigo-900'>{performanceData.metrics.redirectTime}ms</p>
+            <div className='bg-indigo-500/20 p-4 rounded-lg border border-indigo-400/30'>
+              <p className='text-sm text-indigo-400'>Redirect Time</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.redirectTime}ms</p>
             </div>
-            <div className='bg-pink-50 p-4 rounded-lg'>
-              <p className='text-sm text-pink-600'>DOM Interactive</p>
-              <p className='text-lg font-semibold text-pink-900'>{performanceData.metrics.domInteractive}ms</p>
+            <div className='bg-pink-500/20 p-4 rounded-lg border border-pink-400/30'>
+              <p className='text-sm text-pink-400'>DOM Interactive</p>
+              <p className='text-lg font-semibold text-white'>{performanceData.metrics.domInteractive}ms</p>
             </div>
           </div>
         </div>
@@ -78,26 +79,26 @@ const PerformanceMetrics = ({ performanceData }) => {
       {(performanceData.issues?.length > 0 || performanceData.suggestions?.length > 0) && (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           {performanceData.issues?.length > 0 && (
-            <div>
-              <h3 className='text-lg font-semibold text-gray-900 mb-3'>Performance Issues</h3>
+            <div className='bg-black/40 backdrop-blur-lg p-6 rounded-lg border border-white/5 shadow-lg'>
+              <h3 className='text-lg font-semibold text-white mb-3'>Performance Issues</h3>
               <ul className='space-y-2'>
                 {performanceData.issues.map((issue, index) => (
-                  <li key={index} className='flex items-start text-red-600'>
+                  <li key={index} className='flex items-start text-red-400'>
                     <AlertTriangle className='w-4 h-4 mr-2 mt-0.5 flex-shrink-0' />
-                    <span className='text-sm'>{issue}</span>
+                    <span className='text-sm text-gray-300'>{issue}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
           {performanceData.suggestions?.length > 0 && (
-            <div>
-              <h3 className='text-lg font-semibold text-gray-900 mb-3'>Performance Suggestions</h3>
+            <div className='bg-black/40 backdrop-blur-lg p-6 rounded-lg border border-white/5 shadow-lg'>
+              <h3 className='text-lg font-semibold text-white mb-3'>Performance Suggestions</h3>
               <ul className='space-y-2'>
                 {performanceData.suggestions.map((suggestion, index) => (
-                  <li key={index} className='flex items-start text-green-600'>
+                  <li key={index} className='flex items-start text-green-400'>
                     <CheckCircle className='w-4 h-4 mr-2 mt-0.5 flex-shrink-0' />
-                    <span className='text-sm'>{suggestion}</span>
+                    <span className='text-sm text-gray-300'>{suggestion}</span>
                   </li>
                 ))}
               </ul>
@@ -105,7 +106,7 @@ const PerformanceMetrics = ({ performanceData }) => {
           )}
         </div>
       )}
-    </div>
+    </SpotlightCard>
   );
 };
 

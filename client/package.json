@@ -19,6 +19,7 @@
     "motion": "^12.23.12",
     "next": "14.0.4",
     "ogl": "^1.0.11",
+    "postprocessing": "^6.37.8",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
