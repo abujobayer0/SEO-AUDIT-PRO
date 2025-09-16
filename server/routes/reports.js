@@ -120,7 +120,9 @@ router.get("/summary/:auditId", auth, async (req, res) => {
         descriptionLength: audit.metaTags?.descriptionLength || 0,
         length: audit.metaTags?.titleLength || 0,
       },
-      keywords: audit.content?.topKeywords || [],
+      keywords: Array.isArray(audit.content?.topKeywords)
+        ? audit.content.topKeywords.map((k) => (typeof k === "string" ? k : k?.keyword || "")).filter(Boolean)
+        : [],
       priorityIssues: topIssues,
       suggestions,
       nextSteps: [

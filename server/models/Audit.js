@@ -306,3 +306,51 @@ auditSchema.index({ userId: 1, createdAt: -1 });
 auditSchema.index({ websiteUrl: 1 });
 
 module.exports = mongoose.model("Audit", auditSchema);
+
+// Coercion hook to avoid cast errors from inconsistent upstream data
+auditSchema.pre("validate", function (next) {
+  try {
+    const doc = this;
+    // Normalize content.topKeywords: allow stringified JSON or array of strings
+    if (doc.content && doc.content.topKeywords) {
+      if (typeof doc.content.topKeywords === "string") {
+        try {
+          doc.content.topKeywords = JSON.parse(doc.content.topKeywords);
+        } catch {
+          doc.content.topKeywords = [];
+        }
+      }
+      if (Array.isArray(doc.content.topKeywords)) {
+        doc.content.topKeywords = doc.content.topKeywords
+          .map((kw) => {
+            if (typeof kw === "string") return { keyword: kw, count: 1, density: 0, type: "word" };
+            if (kw && typeof kw === "object") {
+              return {
+                keyword: String(kw.keyword || ""),
+                count: Number(kw.count || 0),
+                density: Number(kw.density || 0),
+                type: String(kw.type || "word"),
+              };
+            }
+            return null;
+          })
+          .filter(Boolean);
+      } else {
+        doc.content.topKeywords = [];
+      }
+    }
+
+    // Normalize links.withoutText similarly if needed
+    if (doc.links && doc.links.withoutText) {
+      if (typeof doc.links.withoutText === "string") {
+        try {
+          doc.links.withoutText = JSON.parse(doc.links.withoutText);
+        } catch {
+          doc.links.withoutText = [];
+        }
+      }
+      if (!Array.isArray(doc.links.withoutText)) doc.links.withoutText = [];
+    }
+  } catch (_) {}
+  next();
+});

@@ -1,8 +1,31 @@
-import { TrendingUp, AlertTriangle, CheckCircle } from "lucide-react";
+import { TrendingUp, AlertTriangle, CheckCircle, Sparkles } from "lucide-react";
+import { useState } from "react";
 import SpotlightCard from "../SpotlightCard";
+import api from "@/lib/api";
 
-const PerformanceMetrics = ({ performanceData }) => {
+const PerformanceMetrics = ({ performanceData, websiteUrl }) => {
   if (!performanceData) return null;
+
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState("");
+  const [aiResult, setAiResult] = useState(null);
+
+  const handleExplain = async () => {
+    try {
+      setAiLoading(true);
+      setAiError("");
+      setAiResult(null);
+      const { data } = await api.post("/ai/perf-explain", {
+        websiteUrl: websiteUrl || "",
+        performance: performanceData,
+      });
+      setAiResult(data);
+    } catch (e) {
+      setAiError(e.message || "Failed to get AI analysis");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   return (
     <SpotlightCard className='bg-black/80 backdrop-blur-xl border-white/5 shadow-2xl mb-8' spotlightColor='rgba(59, 130, 246, 0.15)'>
@@ -106,6 +129,34 @@ const PerformanceMetrics = ({ performanceData }) => {
           )}
         </div>
       )}
+
+      <div className='mt-6'>
+        <button
+          onClick={handleExplain}
+          disabled={aiLoading}
+          className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-black font-semibold shadow'
+        >
+          <Sparkles className='w-4 h-4' />
+          {aiLoading ? "Analyzing..." : "AI Explain & Fixes"}
+        </button>
+        {aiError ? <p className='text-red-400 text-sm mt-2'>{aiError}</p> : null}
+
+        {aiResult && (
+          <div className='mt-4 space-y-3'>
+            {aiResult.summary && <div className='bg-black/40 border border-white/10 p-4 rounded-lg text-gray-200'>{aiResult.summary}</div>}
+            {Array.isArray(aiResult.actions) && aiResult.actions.length > 0 && (
+              <div className='bg-black/40 border border-white/10 p-4 rounded-lg'>
+                <div className='text-white font-semibold mb-2'>Priority Actions</div>
+                <ul className='list-disc ml-5 text-gray-200 space-y-1'>
+                  {aiResult.actions.map((a, i) => (
+                    <li key={i}>{a}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </SpotlightCard>
   );
 };

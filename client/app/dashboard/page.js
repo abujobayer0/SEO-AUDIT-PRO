@@ -31,6 +31,15 @@ export default function DashboardPage() {
   const [summary, setSummary] = useState(null);
   const [isSummaryLoading, setIsSummaryLoading] = useState(false);
 
+  const handleLogout = () => {
+    try {
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem("auth_token");
+      }
+    } catch (_) {}
+    router.replace("/login");
+  };
+
   const handleAudit = async (e) => {
     e.preventDefault();
 
@@ -199,13 +208,7 @@ export default function DashboardPage() {
                 <Settings className='h-4 w-4 mr-2' />
                 Settings
               </StarBorder>
-              <StarBorder
-                as='button'
-                onClick={() => router.push("/")}
-                color='rgba(255, 255, 255, 0.6)'
-                thickness={1}
-                className='px-4  py-2'
-              >
+              <StarBorder as='button' onClick={handleLogout} color='rgba(255, 255, 255, 0.6)' thickness={1} className='px-4  py-2'>
                 <LogOut className='h-4 w-4 mr-2' />
                 Logout
               </StarBorder>

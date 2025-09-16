@@ -977,7 +977,12 @@ class SEOAuditService {
 
     // Check keyword density and distribution
     const keywordAnalysis = contentAnalysis.keywordAnalysis;
-    const topKeywords = keywordAnalysis.topKeywords;
+    const topKeywords = (keywordAnalysis.topKeywords || []).map((kw) => ({
+      keyword: String(kw.keyword || ""),
+      count: Number(kw.count || 0),
+      density: Number(kw.density || 0),
+      type: String(kw.type || "word"),
+    }));
 
     // Check for keyword stuffing
     const highDensityKeywords = topKeywords.filter((kw) => kw.density > 3);

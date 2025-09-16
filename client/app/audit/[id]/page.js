@@ -103,10 +103,10 @@ export default function AuditDetailPage() {
       <div className='max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 relative z-10'>
         <ScoreOverview auditData={auditData} />
 
-        <PerformanceMetrics performanceData={auditData.performance} />
+        <PerformanceMetrics performanceData={auditData.performance} websiteUrl={auditData.websiteUrl} />
 
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8'>
-          <MetaTags meta={meta} auditData={auditData} />
+          <MetaTags meta={meta} auditData={auditData} keywords={keywords} />
           <ContentAnalysis contentData={auditData.content} />
         </div>
 
