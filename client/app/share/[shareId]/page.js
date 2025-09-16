@@ -68,7 +68,7 @@ export default function SharedAuditPage() {
           <div className='flex justify-between items-center py-3'>
             <div className='flex items-center'>
               <BarChart3 className='h-7 w-7 text-white' />
-              <span className='ml-2 text-lg font-bold text-white'>SEO Audit Pro – Shared</span>
+              <span className='ml-2 text-lg font-bold text-white'>Seo Inspect Pro – Shared</span>
             </div>
           </div>
         </div>

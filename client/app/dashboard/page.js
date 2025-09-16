@@ -194,7 +194,7 @@ export default function DashboardPage() {
             <Link href={"/"}>
               <div className='flex items-center'>
                 <BarChart3 className='h-6 w-6 text-white' />
-                <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
+                <span className='ml-2 text-xl font-bold text-white'>Seo Inspect Pro</span>
               </div>
             </Link>
             <div className='flex items-center space-x-4'>

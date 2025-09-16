@@ -57,7 +57,7 @@ export default function HomePage() {
             <Link href={"/"}>
               <div className='flex items-center'>
                 <BarChart3 className='h-6 w-6 text-white' />
-                <span className='ml-2 text-xl font-bold text-white'>SEO Audit Pro</span>
+                <span className='ml-2 text-xl font-bold text-white'>SEO Inspect Pro</span>
               </div>
             </Link>
             <div className='flex space-x-4'>
@@ -91,7 +91,7 @@ export default function HomePage() {
         <div className='absolute inset-0 flex items-center justify-center'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10'>
             <h1 className='text-5xl md:text-7xl font-bold text-white mb-8'>
-              <span className='text-gradient-blue'>Audit Pro</span>
+              <span className='text-gradient-blue'>Seo Reports</span>
               <div className='my-6'>
                 <TrueFocus
                   sentence='Close Clients Faster'
@@ -396,12 +396,12 @@ export default function HomePage() {
           <div className='text-center'>
             <div className='flex items-center justify-center mb-4'>
               <BarChart3 className='h-8 w-8 text-white' />
-              <span className='ml-2 text-xl font-bold'>SEO Audit Pro</span>
+              <span className='ml-2 text-xl font-bold'>Seo Inspect Pro</span>
             </div>
             <p className='text-gray-100 mb-4'>
               <ShinyText text='Premium intelligence platform' speed={7} /> for discerning agencies
             </p>
-            <p className='text-gray-200 text-sm'>© 2024 SEO Audit Pro. All rights reserved.</p>
+            <p className='text-gray-200 text-sm'>© 2024 Seo Inspect Pro. All rights reserved.</p>
           </div>
         </div>
       </footer>

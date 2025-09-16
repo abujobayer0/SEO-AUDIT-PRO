@@ -5,7 +5,8 @@ import ClickSpark from "../components/ClickSpark";
 import { Analytics } from "@vercel/analytics/next";
 import { BRAND } from "@/lib/brand";
 const inter = Inter({ subsets: ["latin"] });
-
+import LogRocket from "logrocket";
+import { useEffect } from "react";
 export const metadata = {
   title: `${BRAND.name} – ${BRAND.tagline}`,
   description: BRAND.tagline,
@@ -33,6 +34,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  useEffect(() => {
+    LogRocket.init("uibfxx/seo-inspect-pro");
+  }, []);
   return (
     <html lang='en' className='dark'>
       <body className={`${inter.className} bg-black text-white min-h-screen`}>

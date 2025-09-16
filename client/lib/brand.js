@@ -1,5 +1,5 @@
 export const BRAND = {
-  name: "SEO Audit Pro",
+  name: "SEO Inspect Pro",
   tagline: "Beautiful, white‑label SEO audits in minutes",
   url: "https://example.com",
   ogImage: "https://i.ibb.co.com/r2cWMKpj/Gemini-Generated-Image-hbp6hthbp6hthbp6.png",
