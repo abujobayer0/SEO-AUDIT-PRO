@@ -21,7 +21,7 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.NODE_ENV === "production" ? "https://yourdomain.com" : "http://localhost:3000",
+    origin: process.env.NODE_ENV === "production" ? "https://seo-audit-pro.vercel.app" : "http://localhost:3000",
     credentials: true,
   })
 );
