@@ -8,6 +8,28 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "SEO Audit Tool - White Label Solution",
   description: "Professional SEO audit tool for agencies with white-label reporting",
+  metadataBase: new URL("https://example.com"),
+  openGraph: {
+    title: "SEO Audit Tool - White Label Solution",
+    description: "Professional SEO audit tool for agencies with white-label reporting",
+    type: "website",
+    images: [
+      {
+        url: "https://og-playground.vercel.app/api/card?title=SEO%20Audit%20Pro&subtitle=White‑Label%20SEO%20Reports",
+        width: 1200,
+        height: 630,
+        alt: "SEO Audit Pro - White‑Label SEO Reports",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SEO Audit Tool - White Label Solution",
+    description: "Professional SEO audit tool for agencies with white-label reporting",
+    images: [
+      "https://og-playground.vercel.app/api/card?title=SEO%20Audit%20Pro&subtitle=White‑Label%20SEO%20Reports",
+    ],
+  },
 };
 
 export default function RootLayout({ children }) {

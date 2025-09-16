@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "og-playground.vercel.app"],
   },
 };
 
