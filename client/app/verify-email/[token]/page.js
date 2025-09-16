@@ -60,7 +60,7 @@ export default function VerifyEmailPage({ params }) {
               <h3 className='text-lg font-medium text-white mb-2'>
                 <ShinyText text='Email Verified Successfully!' speed={6} />
               </h3>
-              <p className='text-gray-100 mb-6'>Your email has been verified. You can now access all features of your account.</p>
+              <p className='text-gray-100 mb-6'>You're all set. Head to your dashboard to run your first audit.</p>
               <StarBorder
                 as='button'
                 onClick={() => router.push("/dashboard")}
@@ -86,7 +86,7 @@ export default function VerifyEmailPage({ params }) {
                   thickness={1}
                   className='w-full'
                 >
-                  Go to Dashboard
+                  Try Again
                 </StarBorder>
                 <button
                   onClick={async () => {

@@ -28,15 +28,15 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-primary-50 to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+    <div className='min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
       <div className='max-w-md w-full space-y-8'>
         <div className='text-center'>
           <div className='flex items-center justify-center mb-4'>
-            <BarChart3 className='h-10 w-10 text-primary-600' />
-            <span className='ml-2 text-2xl font-bold text-gray-900'>SEO Audit Pro</span>
+            <BarChart3 className='h-10 w-10 text-white' />
+            <span className='ml-2 text-2xl font-bold text-white'>SEO Audit Pro</span>
           </div>
-          <h2 className='text-3xl font-bold text-gray-900'>Reset your password</h2>
-          <p className='mt-2 text-gray-600'>
+          <h2 className='text-3xl font-bold text-white'>Reset your password</h2>
+          <p className='mt-2 text-gray-100'>
             {emailSent ? "Check your email for reset instructions" : "Enter your email to receive password reset instructions"}
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
         {!emailSent ? (
           <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
             <div>
-              <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1'>
+              <label htmlFor='email' className='block text-sm font-medium text-gray-100 mb-1'>
                 Email address
               </label>
               <input
@@ -55,14 +55,18 @@ export default function ForgotPasswordPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className='input'
+                className='w-full bg-gray-900/30 border border-white/20 focus:border-white text-white rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-white/20 transition-all shadow-lg backdrop-blur-sm'
                 placeholder='Enter your email'
                 disabled={isLoading}
               />
             </div>
 
             <div>
-              <button type='submit' disabled={isLoading} className='btn btn-primary w-full'>
+              <button
+                type='submit'
+                disabled={isLoading}
+                className='w-full py-3 px-4 border border-white/30 rounded-xl text-white hover:bg-white/10 transition-all'
+              >
                 {isLoading ? (
                   <div className='flex items-center justify-center'>
                     <div className='animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2'></div>
@@ -75,9 +79,9 @@ export default function ForgotPasswordPage() {
             </div>
 
             <div className='text-center'>
-              <p className='text-sm text-gray-600'>
+              <p className='text-sm text-gray-100'>
                 Remember your password?{" "}
-                <a href='/login' className='font-medium text-primary-600 hover:text-primary-500'>
+                <a href='/login' className='font-medium text-white hover:text-white/80'>
                   Sign in
                 </a>
               </p>
@@ -85,15 +89,18 @@ export default function ForgotPasswordPage() {
           </form>
         ) : (
           <div className='mt-8 space-y-6'>
-            <div className='bg-green-50 p-4 rounded-md'>
-              <p className='text-green-800'>
+            <div className='bg-black/30 border border-white/10 p-4 rounded-md'>
+              <p className='text-gray-100'>
                 We've sent password reset instructions to <strong>{email}</strong>. Please check your inbox and follow the instructions to
                 reset your password.
               </p>
             </div>
 
             <div className='space-y-4'>
-              <button onClick={() => router.push("/login")} className='btn btn-outline w-full'>
+              <button
+                onClick={() => router.push("/login")}
+                className='w-full py-3 px-4 border border-white/30 rounded-xl text-white hover:bg-white/10 transition-all'
+              >
                 Return to Login
               </button>
 
@@ -102,7 +109,7 @@ export default function ForgotPasswordPage() {
                   setEmailSent(false);
                   setEmail("");
                 }}
-                className='text-sm text-primary-600 hover:text-primary-500 w-full text-center'
+                className='text-sm text-white hover:text-white/80 w-full text-center'
               >
                 Try with a different email
               </button>

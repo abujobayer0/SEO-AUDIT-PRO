@@ -66,7 +66,7 @@ export default function LoginPage() {
           <h2 className='text-3xl font-bold text-white'>
             Welcome <ShinyText text='back' className='font-bold' speed={7} />
           </h2>
-          <p className='mt-2 text-gray-100'>Sign in to your account</p>
+          <p className='mt-2 text-gray-100'>Access your audits, reports, and branding settings</p>
         </div>
 
         <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
@@ -154,7 +154,7 @@ export default function LoginPage() {
             <p className='text-sm text-gray-100'>
               Don't have an account?{" "}
               <a href='/register' className='font-medium text-white hover:text-white/80'>
-                <ShinyText text='Sign up for free' speed={6} />
+                <ShinyText text='Create one free' speed={6} />
               </a>
             </p>
           </div>

@@ -116,9 +116,9 @@ export default function ResetPasswordPage({ params }) {
             <span className='ml-2 text-2xl font-bold text-white'>SEO Audit Pro</span>
           </div>
           <h2 className='text-3xl font-bold text-white'>
-            Reset your <ShinyText text='password' className='font-bold' speed={7} />
+            Set a new <ShinyText text='password' className='font-bold' speed={7} />
           </h2>
-          <p className='mt-2 text-gray-100'>Enter your new password below</p>
+          <p className='mt-2 text-gray-100'>Create a strong password to keep your account secure</p>
         </div>
 
         <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
@@ -167,7 +167,7 @@ export default function ResetPasswordPage({ params }) {
                       </div>
                       <span className='text-xs font-medium text-white/80'>{passwordStrength.message}</span>
                     </div>
-                    <p className='text-xs text-gray-300 mt-1'>Use 8+ characters with a mix of uppercase, lowercase, numbers, and symbols</p>
+                    <p className='text-xs text-gray-300 mt-1'>Use 8+ characters with uppercase, lowercase, numbers, and symbols</p>
                   </div>
                 )}
               </div>

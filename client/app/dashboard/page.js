@@ -259,23 +259,23 @@ export default function DashboardPage() {
                 containerClassName='mb-4'
                 textClassName='text-white text-5xl font-bold'
               >
-                Welcome back!
+                Welcome back
               </ScrollReveal>
               <p className='text-gray-300 text-xl'>
-                Run a new <ShinyText text='SEO audit' className='font-semibold' speed={6} /> or review your previous reports
+                Run a new <ShinyText text='SEO audit' className='font-semibold' speed={6} /> or open a recent report
               </p>
             </div>
 
             {/* Audit Form Container - Centered */}
             <div className='w-full max-w-5xl bg-black/40 backdrop-blur-lg border-2 border-blue-400/30 rounded-3xl p-8 mt-[45vh]'>
               <h2 className='text-3xl font-semibold mb-8 text-white text-center'>
-                <ShinyText text='Run New Audit' className='font-semibold' speed={7} />
+                <ShinyText text='Start a New Audit' className='font-semibold' speed={7} />
               </h2>
               <form onSubmit={handleAudit} className='flex gap-6'>
                 <div className='flex-1'>
                   <input
                     type='url'
-                    placeholder='Enter website URL (e.g., example.com)'
+                    placeholder='Enter a website URL (e.g., example.com)'
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     className='w-full bg-black/50 border border-white/30 focus:border-blue-400 text-white rounded-2xl py-5 px-8 text-xl outline-none focus:ring-2 focus:ring-blue-400/50 transition-all shadow-lg backdrop-blur-sm placeholder-gray-400'
@@ -298,7 +298,7 @@ export default function DashboardPage() {
                   ) : (
                     <div className='flex items-center'>
                       <Search className='h-6 w-6 mr-3' />
-                      Audit Now
+                      Run Audit
                     </div>
                   )}
                 </StarBorder>
@@ -340,7 +340,7 @@ export default function DashboardPage() {
                 <TrendingUp className='h-8 w-8 text-green-400' />
               </div>
               <h3 className='text-3xl font-bold text-white mb-2'>{stats.averageScore}</h3>
-              <p className='text-gray-300 font-medium'>Average Score</p>
+              <p className='text-gray-300 font-medium'>Avg. Score</p>
             </SpotlightCard>
 
             <SpotlightCard className='text-center bg-black/95 backdrop-blur-lg border-white/10' spotlightColor='rgba(59, 130, 246, 0.3)'>
@@ -348,7 +348,7 @@ export default function DashboardPage() {
                 <Globe className='h-8 w-8 text-blue-400' />
               </div>
               <h3 className='text-3xl font-bold text-white mb-2'>{stats.websitesTracked}</h3>
-              <p className='text-gray-300 font-medium'>Websites Tracked</p>
+              <p className='text-gray-300 font-medium'>Websites</p>
             </SpotlightCard>
 
             <SpotlightCard className='text-center bg-black/95 backdrop-blur-lg border-white/10' spotlightColor='rgba(168, 85, 247, 0.3)'>
@@ -356,7 +356,7 @@ export default function DashboardPage() {
                 <FileText className='h-8 w-8 text-purple-400' />
               </div>
               <h3 className='text-3xl font-bold text-white mb-2'>{stats.reportsGenerated}</h3>
-              <p className='text-gray-300 font-medium'>Reports Generated</p>
+              <p className='text-gray-300 font-medium'>Reports</p>
             </SpotlightCard>
           </div>
         </div>

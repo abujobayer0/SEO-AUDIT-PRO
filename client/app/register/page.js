@@ -126,7 +126,7 @@ export default function RegisterPage() {
           <h2 className='text-3xl font-bold text-white'>
             Create your <ShinyText text='account' className='font-bold' speed={7} />
           </h2>
-          <p className='mt-2 text-gray-100'>Start your premium experience today</p>
+          <p className='mt-2 text-gray-100'>Start auditing in minutes. No credit card required.</p>
         </div>
 
         <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
@@ -150,7 +150,7 @@ export default function RegisterPage() {
 
             <div>
               <label htmlFor='email' className='block text-sm font-medium text-gray-100 mb-1'>
-                Email address
+                Work email
               </label>
               <input
                 id='email'
@@ -210,7 +210,7 @@ export default function RegisterPage() {
                       </div>
                       <span className='text-xs font-medium text-white/80'>{passwordStrength.message}</span>
                     </div>
-                    <p className='text-xs text-gray-300 mt-1'>Use 8+ characters with a mix of uppercase, lowercase, numbers, and symbols</p>
+                    <p className='text-xs text-gray-300 mt-1'>Use 8+ characters with uppercase, lowercase, numbers, and symbols</p>
                   </div>
                 )}
               </div>

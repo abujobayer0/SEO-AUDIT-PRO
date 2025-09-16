@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, BarChart3, FileText, Shield, Zap, Users } from "lucide-react";
+import { Search, BarChart3 } from "lucide-react";
 import toast from "react-hot-toast";
-import LiquidEther from "../components/LiquidEther";
 import FeaturesBento from "../components/FeaturesBento";
 import StarBorder from "../components/StarBorder";
 import TrueFocus from "../components/TrueFocus";
@@ -14,8 +13,6 @@ import ShinyText from "../components/ShinyText";
 import CircularGallery from "../components/CircularGallery";
 import RippleGrid from "../components/RippleGrid";
 import Threads from "@/components/Threads";
-import Hyperspeed from "@/components/Hyperspeed";
-import FaultyTerminal from "@/components/FaultyTerminal";
 import Galaxy from "@/components/Galaxy";
 
 export default function HomePage() {
@@ -79,10 +76,10 @@ export default function HomePage() {
         <div className='absolute inset-0 flex items-center justify-center'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10'>
             <h1 className='text-5xl md:text-7xl font-bold text-white mb-8'>
-              <span className='text-gradient-blue'>Elevate</span>
+              <span className='text-gradient-blue'>Audit Pro</span>
               <div className='my-6'>
                 <TrueFocus
-                  sentence='Your SEO Strategy'
+                  sentence='Close Clients Faster'
                   blurAmount={3}
                   borderColor='#ffffff'
                   glowColor='rgba(255, 255, 255, 0.6)'
@@ -90,12 +87,11 @@ export default function HomePage() {
                   pauseBetweenAnimations={2}
                 />
               </div>
-              <span className='block text-white'>With Precision</span>
+              <span className='block text-white'>With White‑Label SEO Reports</span>
             </h1>
             <p className='text-xl md:text-2xl text-gray-100 mb-10 max-w-3xl mx-auto leading-relaxed'>
-              Craft <ShinyText text='stunning, data-driven' className='font-semibold' speed={7} /> SEO reports that transform your client
-              relationships. Our white-label platform delivers executive-level insights with the polish and precision that premium clients
-              expect.
+              Turn quick audits into signed proposals. Build <ShinyText text='beautiful, data‑driven' className='font-semibold' speed={7} />{" "}
+              reports in minutes—fully branded, easy to understand, and ready to send.
             </p>
             {/* Quick Audit Form */}
             <div className='max-w-2xl mx-auto'>
@@ -103,7 +99,7 @@ export default function HomePage() {
                 <div className='flex-1'>
                   <input
                     type='url'
-                    placeholder='Enter your website URL'
+                    placeholder='Paste a website URL (e.g., https://example.com)'
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     className='w-full bg-gray-900/30 border border-white/20 focus:border-white text-white rounded-xl py-4 px-6 text-lg outline-none focus:ring-2 focus:ring-white/20 transition-all shadow-lg backdrop-blur-sm'
@@ -126,7 +122,7 @@ export default function HomePage() {
                   ) : (
                     <div className='flex items-center'>
                       <Search className='h-5 w-5 mr-2' />
-                      Discover Insights
+                      Run Free Audit
                     </div>
                   )}
                 </StarBorder>
@@ -149,7 +145,7 @@ export default function HomePage() {
                 containerClassName='mb-8'
                 textClassName='text-white text-2xl font-light'
               >
-                Elevate your agency's reputation with meticulously crafted white-label audit tools that command premium client fees.
+                Win trust in the first meeting. Deliver executive‑ready audits with your branding—not ours.
               </ScrollReveal>
 
               <ScrollReveal
@@ -160,8 +156,7 @@ export default function HomePage() {
                 containerClassName='mb-8'
                 textClassName='text-gray-100 text-2xl font-light'
               >
-                Present clients with executive-level insights through sophisticated reports that reflect your brand's unique aesthetic and
-                voice.
+                Cut through jargon. Show site health, growth levers, and exactly what to do next.
               </ScrollReveal>
 
               <ScrollReveal
@@ -172,8 +167,7 @@ export default function HomePage() {
                 containerClassName='mb-8'
                 textClassName='text-white text-2xl font-light'
               >
-                From technical architecture to content strategy, deliver actionable intelligence that positions you as an indispensable
-                strategic partner.
+                Pair technical fixes with content wins and a clear roadmap—so clients say yes.
               </ScrollReveal>
             </div>
           </div>
@@ -188,7 +182,7 @@ export default function HomePage() {
               <ShinyText text='Showcase' className='font-bold' speed={8} /> Your Results
             </h2>
             <p className='text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto'>
-              Explore our gallery of premium SEO audit reports and visualizations
+              Everything you need to run fast audits, surface real opportunities, and present them beautifully
             </p>
           </div>
           <div className='h-[500px] w-full'>
@@ -217,10 +211,10 @@ export default function HomePage() {
         <div className='max-w-7xl w-full mx-auto flex flex-col items-center px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl md:text-5xl font-bold text-white mb-6'>
-              <ShinyText text='Essential' className='font-bold' speed={8} /> Intelligence Suite
+              <ShinyText text='Agency‑Grade' className='font-bold' speed={8} /> Intelligence Suite
             </h2>
             <p className='text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto'>
-              Meticulously engineered for agencies that demand sophistication and depth in their client deliverables
+              Built for agencies that need fast audits, trustworthy data, and presentation‑ready output
             </p>
           </div>
 
@@ -233,25 +227,27 @@ export default function HomePage() {
         <div className='absolute inset-0 z-0'>
           <RippleGrid
             gridColor='#0077ff'
-            rippleIntensity={0.05}
-            gridSize={12}
-            gridThickness={20}
-            fadeDistance={1.8}
-            vignetteStrength={2.5}
-            glowIntensity={0.15}
-            opacity={0.6}
-            gridRotation={45}
+            enableRainbow={true}
+            // gridColor="#ffffff"
+            rippleIntensity={0.02}
+            gridSize={30}
+            gridThickness={30}
             mouseInteraction={true}
-            mouseInteractionRadius={1.5}
+            mouseInteractionRadius={1.2}
+            opacity={0.8}
+            fadeDistance={1.2}
+            vignetteStrength={1.2}
+            glowIntensity={0.1}
+            gridRotation={45}
           />
         </div>
         <div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl md:text-5xl font-bold text-white mb-6'>
-              <ShinyText text='Strategic' className='font-bold' speed={8} /> Investment
+              <ShinyText text='Simple' className='font-bold' speed={8} /> Pricing
             </h2>
             <p className='text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto'>
-              Select the tier that aligns with your agency's portfolio and growth trajectory
+              Start free. Upgrade when you're closing more deals and need more scale.
             </p>
           </div>
 
@@ -260,28 +256,28 @@ export default function HomePage() {
               className='text-center bg-black/10 backdrop-blur-md border border-white/10 rounded-xl'
               spotlightColor='rgba(255, 255, 255, 0.2)'
             >
-              <h3 className='text-2xl font-bold mb-2 text-white'>Essential</h3>
+              <h3 className='text-2xl font-bold mb-2 text-white'>Starter</h3>
               <div className='text-4xl font-bold text-white mb-4'>$0</div>
-              <p className='text-gray-100 mb-6'>For emerging consultancies</p>
+              <p className='text-gray-100 mb-6'>For testing and side projects</p>
               <ul className='text-left space-y-3 mb-8 text-gray-100'>
                 <li className='flex items-center'>
-                  <div className='w-2 h-2 bg-white rounded-full mr-3'></div>5 monthly analyses
+                  <div className='w-2 h-2 bg-white rounded-full mr-3'></div>5 monthly audits
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  Core technical assessment
+                  Core technical checks
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  Executive summaries
+                  Instant share links
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  Standard support
+                  Community support
                 </li>
               </ul>
               <StarBorder as='button' className='w-full' color='rgba(255, 255, 255, 0.4)' thickness={1}>
-                Begin Journey
+                Get Started Free
               </StarBorder>
             </SpotlightCard>
             <div className='relative'>
@@ -294,31 +290,31 @@ export default function HomePage() {
               >
                 <h3 className='text-2xl font-bold mb-2 text-white'>Professional</h3>
                 <div className='text-4xl font-bold text-white mb-4'>$19</div>
-                <p className='text-gray-100 mb-6'>For established practices</p>
+                <p className='text-gray-100 mb-6'>For growing agencies</p>
                 <ul className='text-left space-y-3 mb-8 text-gray-100'>
                   <li className='flex items-center'>
                     <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                    50 monthly analyses
+                    50 monthly audits
                   </li>
                   <li className='flex items-center'>
                     <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                    <ShinyText text='Comprehensive intelligence' speed={6} />
+                    <ShinyText text='Advanced insights' speed={6} />
                   </li>
                   <li className='flex items-center'>
                     <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                    Bespoke branded reports
+                    Branded PDF reports
                   </li>
                   <li className='flex items-center'>
                     <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                    Identity integration
+                    Custom logo & colors
                   </li>
                   <li className='flex items-center'>
                     <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                    Dedicated support
+                    Priority support
                   </li>
                 </ul>
                 <StarBorder as='button' className='w-full' color='rgba(255, 255, 255, 0.8)' thickness={1}>
-                  Begin Trial Period
+                  Start 7‑Day Trial
                 </StarBorder>
               </SpotlightCard>
             </div>
@@ -327,33 +323,33 @@ export default function HomePage() {
               className='text-center bg-black/10 backdrop-blur-md border border-white/10 rounded-xl'
               spotlightColor='rgba(255, 255, 255, 0.2)'
             >
-              <h3 className='text-2xl font-bold mb-2 text-white'>Enterprise</h3>
+              <h3 className='text-2xl font-bold mb-2 text-white'>Agency</h3>
               <div className='text-4xl font-bold text-white mb-4'>$49</div>
-              <p className='text-gray-100 mb-6'>For industry leaders</p>
+              <p className='text-gray-100 mb-6'>For established teams and brands</p>
               <ul className='text-left space-y-3 mb-8 text-gray-100'>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  500 monthly analyses
+                  500 monthly audits
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  <ShinyText text='Elite intelligence suite' speed={6} />
+                  <ShinyText text='All Pro features' speed={6} />
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  Complete brand integration
+                  Full white‑labeling
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  API ecosystem
+                  API access
                 </li>
                 <li className='flex items-center'>
                   <div className='w-2 h-2 bg-white rounded-full mr-3'></div>
-                  Multi-team collaboration
+                  Multi‑team collaboration
                 </li>
               </ul>
               <StarBorder as='button' className='w-full' color='rgba(255, 255, 255, 0.4)' thickness={1}>
-                Schedule Consultation
+                Talk to Sales
               </StarBorder>
             </SpotlightCard>
           </div>
@@ -362,9 +358,6 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className='relative w-full text-white backdrop-blur-md border-t flex flex-col items-center border-white/10 mt-16 overflow-hidden'>
-        <div className='absolute inset-0 z-0 pointer-events-none'>
-          <Galaxy saturation={1} mouseInteraction mouseRepulsion />
-        </div>
         <div className='relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16'>
           <div className='text-center'>
             <div className='flex items-center justify-center mb-4'>
